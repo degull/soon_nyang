@@ -36,8 +36,9 @@ export const Title = styled.div`
 
 export const Food = styled.img`
    position: absolute;
-   width: 25px;
+   width: 27px;
    left: 50px;
+   cursor: pointer;
 `;
 
 
@@ -45,6 +46,8 @@ export const Map = styled.img`
    position: absolute;
    width: 25px;
    right: 50px;
+   cursor: pointer;
+
 `;
 
 
