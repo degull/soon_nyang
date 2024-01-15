@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './Logo.styled';
@@ -11,7 +12,7 @@ export default function Logo() {
     const timeoutId = setTimeout(() => {
       setShowLogo(false);
       navigate('/main');
-    }, 3000);
+    }, 3000); 
 
     return () => clearTimeout(timeoutId);
   }, [navigate]);
@@ -20,7 +21,7 @@ export default function Logo() {
     <>
       {showLogo && (
         <S.Wrapper>
-          <S.Logo src="/img/Logo.png" rotate360 />
+            <S.Logo src="/img/loading_02.png" showLoading1 />
         </S.Wrapper>
       )}
       {!showLogo && <Main />}

@@ -6,11 +6,11 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: #fff;
+  background: #FFEDDC;
 `;
 
 export const Logo = styled.img`
-  width: 20%;
+  width: 70px;
   max-width: 100%;
   animation: rotate 3s infinite linear;
   
@@ -23,5 +23,3 @@ export const Logo = styled.img`
     }
   }
 `;
-
-export default Logo;
