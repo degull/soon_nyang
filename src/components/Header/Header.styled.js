@@ -1,16 +1,17 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-   width: 390px;
-   height: 844px;
-   /* max-width: 390px; */
+   width: 100%;
+   height: 100%;
+   max-width: 390px;
    background: #fff;
    margin: 0 auto;
    display: flex;
    flex-direction: column;
+   padding: 0;
 `;
 
-export const Header = styled.div`
+export const HeaderContainer = styled.div`
    width: 390px;
    height: 35px;
    border-bottom: 1px solid #f5f5f5;
@@ -18,6 +19,7 @@ export const Header = styled.div`
    align-items: center;
    justify-content: center;
 `;
+
 export const Title = styled.div`
    color: #FFA552;
    text-align: center;
