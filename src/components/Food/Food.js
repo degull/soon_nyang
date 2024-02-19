@@ -1,10 +1,15 @@
 import React from 'react';
+import * as S from './Food.styled';
+import Header from '../Header/Header';
+import Menu from '../Menu/Menu';
 
 export default function Food(){
    return (
-      <div>
-         <h1>food page</h1>
-      </div>
+      <S.Wrapper>
+         <Header />
+            <h1>급식소</h1>
+         <Menu />
+      </S.Wrapper>
    );
 };
 

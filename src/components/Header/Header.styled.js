@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
    width: 100%;
    height: 100%;
-   max-width: 390px;
+   /* max-width: 390px; */
    background: #fff;
    margin: 0 auto;
    display: flex;
@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-   width: 390px;
+   width: 100%;
    height: 35px;
    border-bottom: 1px solid #f5f5f5;
    display: flex;
@@ -40,6 +40,7 @@ export const Food = styled.img`
    position: absolute;
    width: 27px;
    left: 50px;
+   margin-top: -11px;
    cursor: pointer;
 `;
 
@@ -48,6 +49,8 @@ export const Map = styled.img`
    position: absolute;
    width: 25px;
    right: 50px;
+   margin-top: -11px;
+
    cursor: pointer;
 
 `;

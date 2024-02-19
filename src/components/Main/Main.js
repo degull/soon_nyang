@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import * as S from './Main.styled';
-import Footer from '../Footer/Footer';
-import Food from '../Food/Food';
 import Header from '../Header/Header';
+import Menu from '../Menu/Menu';
 
 export default function Main() {
   const navigate = useNavigate();  
@@ -14,7 +13,7 @@ export default function Main() {
     <S.Wrapper>
       <Header />
 
-      <Footer />
+      <Menu />
     </S.Wrapper>
   );
 }
