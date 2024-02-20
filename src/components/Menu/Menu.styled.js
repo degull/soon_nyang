@@ -21,7 +21,7 @@ export const MenuContainer = styled.div`
   @media (min-width: 390px) {
     width: 100%;
     max-width: none;
-    justify-content: space-around; /* Equal spacing between icons */
+    justify-content: space-around;
   }
 
   @media (min-width: 600px) {
@@ -45,5 +45,3 @@ export const Icon = styled.img`
   width: 25px;
   height: 25px;
 `;
-
-// ... rest of the styled components
