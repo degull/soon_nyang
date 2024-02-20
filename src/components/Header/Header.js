@@ -11,11 +11,11 @@ const Header = () => {
             </Link>
             
             <Link to="/Food/Food">
-            <S.Food src='/img/Food.png' />
+            <S.Food src='/img/food.png' />
             </Link>
 
             <Link to="/Map/Map">
-                <S.Map src='/img/Map.png' />
+                <S.Map src='/img/map.png' />
             </Link>
         </S.HeaderContainer>
 
