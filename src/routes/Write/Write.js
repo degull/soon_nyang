@@ -3,11 +3,14 @@ import { useDropzone } from 'react-dropzone';
 import * as S from './Write.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
+import CatList from '../../components/CatList/CatList';
 
 const Write = () => {
     const [content, setContent] = useState('');
     const [uploadedImage, setUploadedImage] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [locationObtained, setLocationObtained] = useState(false);
+    const [selectedCat, setSelectedCat] = useState(null);
 
     const onDrop = useCallback(acceptedFiles => {
         const file = acceptedFiles[0];
@@ -20,6 +23,10 @@ const Write = () => {
         setContent(event.target.value);
     };
 
+    const handleCatSelect = (cat) => {
+        setSelectedCat(cat);
+    };
+
     const getUserLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -28,6 +35,7 @@ const Write = () => {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     });
+                    setLocationObtained(true);
                 },
                 error => {
                     console.error('위치 정보를 가져오는 중 오류가 발생했습니다.', error);
@@ -41,13 +49,11 @@ const Write = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // 사용자의 글과 위치 정보를 서버로 전송
-        // 서버에서는 해당 정보를 저장하고 map.js에 전달할 수 있습니다.
         console.log('작성된 내용:', content);
         console.log('업로드된 이미지:', uploadedImage);
         console.log('사용자 위치:', userLocation);
-
-        // 서버에 데이터를 보내는 로직을 추가해야 합니다.
-        // axios 또는 fetch 등을 사용하여 서버로 데이터를 전송할 수 있습니다.
+        console.log('선택된 고양이:', selectedCat);
+        /* 나중에 서버 로직 추가 */ 
     };
 
     return (
@@ -67,9 +73,11 @@ const Write = () => {
                     onChange={handleContentChange}
                     placeholder="여기에 글을 작성하세요..."
                 />
-                <S.LocationButton type="button" onClick={getUserLocation}>
-                    내 위치 가져오기
-                </S.LocationButton>
+                <CatList onSelect={handleCatSelect} />
+                <S.LocationButton type="button" onClick={getUserLocation} obtained={locationObtained}>
+                {locationObtained ? '내 위치 가져오기' : '내 위치 가져오기'}
+                {locationObtained && <S.CheckIcon src="/img/check.png" alt="Check" />}
+            </S.LocationButton>
                 <S.SubmitButton type="submit">게시하기</S.SubmitButton>
             </S.WriteForm>
             <Menu />

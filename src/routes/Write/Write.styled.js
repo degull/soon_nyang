@@ -16,7 +16,7 @@ export const WriteForm = styled.form`
 
 export const DropzoneContainer = styled.div`
   width: 100%;
-  height: 120px;
+  height: 150px;
   border: 2px dashed #cccccc;
   border-radius: 5px;
   display: flex;
@@ -34,7 +34,7 @@ export const DropzoneText = styled.p`
 
 export const UploadedImage = styled.img`
   width: 100%;
-  height: 80%;
+  height: 120%;
   object-fit: cover;
 `;
 
@@ -49,24 +49,33 @@ export const TextArea = styled.textarea`
 `;
 
 export const SubmitButton = styled.button`
-  width: 100%;
+  width: 350px;
+  height: 32px;
   padding: 10px;
-  background-color: #3498db;
+  background-color: #FFA552;
+  font-size: 11px;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
+  margin: 0 0 30px 25px;
 `;
 
 export const LocationButton = styled.button`
-  background-color: #9c9;
-  color: white;
+  background-color: #fff;
+  color: black;
   padding: 5px 15px;
-  border: none;
+  border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
   font-size: 11px;
-  &:hover {
-    background-color: #9c2;
-  }
+  margin-left: 35%;
+  margin-bottom: 20px;
+`;
+
+export const CheckIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 `;
