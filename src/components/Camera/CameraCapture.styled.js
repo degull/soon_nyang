@@ -23,4 +23,4 @@ export const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-`;
+`;               

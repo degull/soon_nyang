@@ -61,7 +61,7 @@ export default function Food() {
    return (
       <S.Wrapper>
          <Header />
-         <h1>급식소</h1>
+         <S.Title>급식소 위치</S.Title>
          <div id="map" style={{ width: '100%', height: '400px' }}></div>
          <Menu />
       </S.Wrapper>
