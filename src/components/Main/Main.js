@@ -19,6 +19,20 @@ export default function Main() {
       });
   }, []);
 
+  // 북마크 상태를 추적하는 state 추가
+  const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+
+  // 북마크 토글 함수
+  const toggleBookmark = postId => {
+    if (bookmarkedPosts.includes(postId)) {
+      // 북마크 해제
+      setBookmarkedPosts(bookmarkedPosts.filter(id => id !== postId));
+    } else {
+      // 북마크 추가
+      setBookmarkedPosts([...bookmarkedPosts, postId]);
+    }
+  };
+
   return (
     <S.Wrapper>
       <Header />
@@ -32,7 +46,16 @@ export default function Main() {
               <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
             </S.PostProfile>
             <S.PostImage src={post.catDetailResponse.imageUrl} alt="Cat" />
-            <div>{post.content}</div>
+            <S.PostFooter>
+              <img src="/img/likelike.png" alt="Like" />
+              <S.PostBookmark
+                src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
+                alt="Bookmark"
+                onClick={() => toggleBookmark(post.postId)}
+              />
+            </S.PostFooter>
+            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>            
+            <S.PostContent>{post.content}</S.PostContent>
           </S.Post>
         ))}
       </S.PostsContainer>
