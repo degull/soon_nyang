@@ -41,13 +41,14 @@ export default function Main() {
         {posts.map(post => (
           <S.Post key={post.postId}>
             <S.PostProfile>
-              <img src="/img/zzon.jpg" alt="User Profile" />
+              <img src={post.catDetailResponse.imageUrl} alt="User Profile" />
               <span>{post.catDetailResponse.name}</span>
               <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
             </S.PostProfile>
-            <S.PostImage src={post.catDetailResponse.imageUrl} alt="Cat" />
+            <S.PostImage src={post.image} alt="Cat" />
             <S.PostFooter>
               <img src="/img/likelike.png" alt="Like" />
+              {/* 북마크 토글 함수를 전달하고 북마크 상태에 따라 적절한 이미지를 렌더링 */}
               <S.PostBookmark
                 src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
                 alt="Bookmark"
