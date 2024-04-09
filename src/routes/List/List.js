@@ -4,14 +4,15 @@ import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 
 const List = () => {
+    // api 추가해야됨
     // 가상의 고양이 데이터 배열
     const cats = [
-        { id: 1, name: '고양이 1', image: '/img/chuchu.jpg', gender: 'female', age: 3 },
-        { id: 2, name: '고양이 2', image: 'cat2.jpg', gender: 'male', age: 2 },
-        { id: 3, name: '고양이 3', image: 'cat3.jpg', gender: 'female', age: 4 },
-        { id: 4, name: '고양이 4', image: 'cat4.jpg', gender: 'male', age: 1 },
-        { id: 5, name: '고양이 5', image: 'cat5.jpg', gender: 'female', age: 5 },
-        // 필요한 만큼 고양이 데이터를 추가할 수 있습니다.
+        { id: 1, name: '츄츄', image: '/img/chuchu.jpg', gender: 'female', age: 3 },
+        { id: 2, name: '루루', image: '/img/lulu.jpg', gender: 'male', age: 2 },
+        { id: 3, name: '쫀떡', image: '/img/zzon.jpg', gender: 'female', age: 4 },
+        { id: 4, name: '고양이 4', image: '/img/dd.jpg', gender: 'male', age: 1 },
+        { id: 5, name: '고양이 5', image: '/img/coco.jpg', gender: 'female', age: 5 },
+        
     ];
 
     // 좋아요 상태를 관리하는 state

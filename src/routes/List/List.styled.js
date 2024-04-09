@@ -59,6 +59,11 @@ export const CatName = styled.p`
   color: #FFA552;
   font-size: 17px;
   font-weight: 800;
+  font-family:'bitbit';
+  @font-face{
+  font-family:'bitbit';
+  src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
+}
 `;
 
 export const CatAge = styled.p`
@@ -70,14 +75,21 @@ export const CatAge = styled.p`
   margin: 0; /* 기본 마진 제거 */
   color: #333; /* 기본 색상 설정 */
   font-size: 14px; /* 기본 폰트 크기 설정 */
+  font-family: 'Cafe24Ssurround';
+  @font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 `;
 
 export const GenderIcon = styled.img`
-  position: absolute; /* 아이콘의 절대적 위치 설정 */
-  top: 5px; /* 위쪽 여백 */
-  right: 5px; /* 오른쪽 여백 */
-  width: 20px;
-  height: 20px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
 `;
 
 export const LikeButton = styled.button`
@@ -89,15 +101,3 @@ export const LikeButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-
-/* export const LikeButton = styled.button`
-  position: absolute;
-  bottom: 10px; 
-  left: 50%;
-  transform: translateX(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
- */
