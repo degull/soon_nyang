@@ -77,7 +77,7 @@ export const CatAge = styled.p`
   width: 100%;
   text-align: center;
   margin: 0;
-  color: #585858;
+  color: #333;
   font-size: 13px;
   font-family: 'Cafe24Ssurround';
   @font-face {
@@ -100,7 +100,7 @@ export const GenderIcon = styled.img`
 export const FollowerCount = styled.div`
   display: flex;
   align-items: center;
-  right: 65px;
+  right: 63px;
   top: 170px;
   position: absolute;
 `;
