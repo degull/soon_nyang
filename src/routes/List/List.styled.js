@@ -58,17 +58,19 @@ export const CatName = styled.p`
   margin: 0; /* 기본 마진 제거 */
   color: #FFA552;
   font-size: 17px;
-  font-weight: 800;
-  font-family:'bitbit';
-  @font-face{
-  font-family:'bitbit';
-  src:url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff'),url('//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2') ;
+  font-weight: 600;
+  font-family: 'SBAggroB';
+  @font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 `;
 
 export const CatAge = styled.p`
   position: absolute;
-  bottom: 30px; /* 고양이 나이를 조절하여 이름 위에 위치하도록 설정합니다. */
+  bottom: 30px;
   left: 0;
   width: 100%;
   text-align: center;

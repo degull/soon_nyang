@@ -1,26 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './List.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 
 const List = () => {
-    // api 추가해야됨
-    // 가상의 고양이 데이터 배열
-    const cats = [
-        { id: 1, name: '츄츄', image: '/img/chuchu.jpg', gender: 'female', age: 3 },
-        { id: 2, name: '루루', image: '/img/lulu.jpg', gender: 'male', age: 2 },
-        { id: 3, name: '쫀떡', image: '/img/zzon.jpg', gender: 'female', age: 4 },
-        { id: 4, name: '고양이 4', image: '/img/dd.jpg', gender: 'male', age: 1 },
-        { id: 5, name: '고양이 5', image: '/img/coco.jpg', gender: 'female', age: 5 },
-        
-    ];
+    const [cats, setCats] = useState([]); // 고양이 데이터 배열
+    const [selectedCat, setSelectedCat] = useState(null); // 선택된 고양이 정보를 저장할 상태
 
-    // 좋아요 상태를 관리하는 state
-    const [liked, setLiked] = useState(false);
+    useEffect(() => {
+        // 고양이 목록을 불러오는 함수
+        const fetchCats = async () => {
+            try {
+                const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cats');
+                }
+                const data = await response.json();
+                setCats(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-    // 좋아요 버튼을 클릭할 때 상태를 토글하는 함수
-    const toggleLike = () => {
-        setLiked(!liked);
+        // 컴포넌트가 마운트될 때 고양이 목록을 불러옴
+        fetchCats();
+    }, []);
+
+    // 고양이를 클릭할 때 실행되는 함수
+    const handleCatClick = async (catId) => {
+        try {
+            const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch cat details');
+            }
+            const data = await response.json();
+            setSelectedCat(data);
+        } catch (error) {
+            console.error('Error fetching cat details:', error);
+        }
     };
 
     return (
@@ -28,15 +45,14 @@ const List = () => {
             <Header />
             <S.CatList>
                 {cats.map(cat => (
-                    <S.CatBox key={cat.id}>
-                        {cat.gender === 'female' && <S.GenderIcon src="/img/female.png" alt="Female" />}
-                        {cat.gender === 'male' && <S.GenderIcon src="/img/male.png" alt="Male" />}
+                    <S.CatBox key={cat.catId} onClick={() => handleCatClick(cat.catId)}>
+                        {cat.gender === 'FEMALE' && <S.GenderIcon src="/img/female.png" alt="Female" />}
+                        {cat.gender === 'MALE' && <S.GenderIcon src="/img/male.png" alt="Male" />}
                         <S.CatImageWrapper>
-                            <S.CatImage src={cat.image} alt={cat.name} />
+                            <S.CatImage src={cat.imageUrl} alt={cat.name} />
                         </S.CatImageWrapper>
                         <S.CatName>{cat.name}</S.CatName>
-                        <S.CatAge>{cat.age}살</S.CatAge>
-
+                        <S.CatAge>{cat.age}</S.CatAge>
                     </S.CatBox>
                 ))}
             </S.CatList>
