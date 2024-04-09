@@ -1,3 +1,5 @@
+// List.js
+
 import React, { useState, useEffect } from 'react';
 import * as S from './List.styled';
 import Header from '../../components/Header/Header';
@@ -53,6 +55,13 @@ const List = () => {
                         </S.CatImageWrapper>
                         <S.CatName>{cat.name}</S.CatName>
                         <S.CatAge>{cat.age}</S.CatAge>
+                        <S.FollowerCount>
+                            <S.FollowerCountImage
+                                src={cat.followerCnt === 0 ? '/img/likelike.png' : '/img/likelikelike.png'}
+                                alt={cat.followerCnt === 0 ? 'No Followers' : 'Has Followers'}
+                            />
+                            <S.FollowerCountText>{cat.followerCnt}</S.FollowerCountText>
+                        </S.FollowerCount>
                     </S.CatBox>
                 ))}
             </S.CatList>

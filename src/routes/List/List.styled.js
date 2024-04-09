@@ -1,3 +1,5 @@
+// List.styled.js
+
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -51,7 +53,7 @@ export const CatName = styled.p`
   padding: 10px;
   text-align: center;
   position: absolute;
-  bottom: 50px; /* 아래쪽 여백을 조정하여 이름을 위로 올립니다. */
+  bottom: 55px; /* 아래쪽 여백을 조정하여 이름을 위로 올립니다. */
   left: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.7); /* 배경색과 투명도 조절 */
@@ -70,13 +72,13 @@ export const CatName = styled.p`
 
 export const CatAge = styled.p`
   position: absolute;
-  bottom: 30px;
+  bottom: 40px;
   left: 0;
   width: 100%;
   text-align: center;
-  margin: 0; /* 기본 마진 제거 */
-  color: #333; /* 기본 색상 설정 */
-  font-size: 14px; /* 기본 폰트 크기 설정 */
+  margin: 0;
+  color: #585858;
+  font-size: 13px;
   font-family: 'Cafe24Ssurround';
   @font-face {
     font-family: 'Cafe24Ssurround';
@@ -94,12 +96,24 @@ export const GenderIcon = styled.img`
   height: 18px;
 `;
 
-export const LikeButton = styled.button`
+
+export const FollowerCount = styled.div`
+  display: flex;
+  align-items: center;
+  right: 65px;
+  top: 170px;
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
+`;
+
+export const FollowerCountImage = styled.img`
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  
+`;
+
+export const FollowerCountText = styled.span`
+  font-size: 11px;
+  font-weight: bold;
+  color: #999;
 `;
