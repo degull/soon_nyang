@@ -24,7 +24,7 @@ export const Title = styled.div`
    color: #FFA552;
    text-align: center;
    font-family: 'omyu_pretty';
-   font-size: 20px;
+   font-size: 19px;
    font-style: normal;
    font-weight: 400;
    line-height: normal;
@@ -54,5 +54,4 @@ export const Map = styled.img`
    cursor: pointer;
 
 `;
-
 

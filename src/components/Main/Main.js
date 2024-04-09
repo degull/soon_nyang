@@ -41,8 +41,8 @@ export default function Main() {
         {posts.map(post => (
           <S.Post key={post.postId}>
             <S.PostProfile>
-              <img src={post.catDetailResponse.imageUrl} alt="User Profile" />
-              <span>{post.catDetailResponse.name}</span>
+            <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />              
+            <span>{post.catDetailResponse.name}</span>
               <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
             </S.PostProfile>
             <S.PostImage src={post.image} alt="Cat" />

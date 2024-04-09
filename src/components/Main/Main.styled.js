@@ -104,3 +104,8 @@ export const PostContent = styled.div`
 export const PostBookmark = styled.img`
   cursor: pointer;
 `;
+
+export const ProfileImage = styled.img`
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #FFD700;
+`;
