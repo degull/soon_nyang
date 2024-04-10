@@ -24,9 +24,9 @@ export const Title = styled.div`
    color: #FFA552;
    text-align: center;
    font-family: 'omyu_pretty';
-   font-size: 19px;
+   font-size: 17px;
    font-style: normal;
-   font-weight: 400;
+   font-weight: 700;
    line-height: normal;
    @font-face {
       font-family: 'omyu_pretty';
@@ -39,7 +39,7 @@ export const Title = styled.div`
 export const Food = styled.img`
    position: absolute;
    width: 27px;
-   left: 50px;
+   left: 22px;
    margin-top: -11px;
    cursor: pointer;
 `;
@@ -48,9 +48,8 @@ export const Food = styled.img`
 export const Map = styled.img`
    position: absolute;
    width: 25px;
-   right: 50px;
+   right: 22px;
    margin-top: -11px;
-
    cursor: pointer;
 
 `;
