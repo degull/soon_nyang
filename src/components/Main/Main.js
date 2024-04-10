@@ -5,6 +5,10 @@ import Menu from '../Menu/Menu';
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
+  const [bookmarkedPosts, setBookmarkedPosts] = useState([]); // 북마크 상태를 추적하는 state 추가
+  const [likedPosts, setLikedPosts] = useState([]); 
+
+  // 추후 북마크 & 좋아요 상태관리 (개수 등..) 추가
 
   useEffect(() => {
     // API 호출
@@ -19,8 +23,7 @@ export default function Main() {
       });
   }, []);
 
-  // 북마크 상태를 추적하는 state 추가
-  const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+  
 
   // 북마크 토글 함수
   const toggleBookmark = postId => {
@@ -32,6 +35,16 @@ export default function Main() {
       setBookmarkedPosts([...bookmarkedPosts, postId]);
     }
   };
+
+
+  const toggleLike = postId => {
+    if (likedPosts.includes(postId)) {
+      setLikedPosts(likedPosts.filter(id => id !== postId));
+    } else {
+      setLikedPosts([...likedPosts, postId]);
+    }
+  };
+
 
   return (
     <S.Wrapper>
@@ -47,8 +60,12 @@ export default function Main() {
             </S.PostProfile>
             <S.PostImage src={post.image} alt="Cat" />
             <S.PostFooter>
-              <img src="/img/likelike.png" alt="Like" />
-              {/* 북마크 토글 함수를 전달하고 북마크 상태에 따라 적절한 이미지를 렌더링 */}
+            <S.PostLikeImg
+                src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
+                alt="Like"
+                onClick={() => toggleLike(post.postId)}
+              />             
+               {/* 북마크 토글 함수를 전달하고 북마크 상태에 따라 적절한 이미지를 렌더링 */}
               <S.PostBookmark
                 src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
                 alt="Bookmark"

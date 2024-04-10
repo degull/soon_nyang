@@ -116,3 +116,7 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   box-shadow: 0 0 0 2px #FFD700;
 `;
+
+export const PostLikeImg = styled.img`
+  cursor: pointer;
+`;
