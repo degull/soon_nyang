@@ -11,6 +11,36 @@ const Map = () => {
         setIsContentOpen(!isContentOpen);
     };
 
+        // 가짜 데이터로 posts 배열 생성
+        const posts = [
+            {
+                postId: 1,
+                catDetailResponse: {
+                    imageUrl: '/img/chuchu.jpg',
+                    name: '고양이1'
+                },
+                memberDetailResponse: {
+                    nickname: '닉네임1'
+                },
+                image: '/img/chuchu.jpg',
+                likeCount: 10,
+                content: '첫 번째 포스트 내용'
+            },
+            {
+                postId: 2,
+                catDetailResponse: {
+                    imageUrl: '/img/coco.jpg',
+                    name: '고양이2'
+                },
+                memberDetailResponse: {
+                    nickname: '닉네임2'
+                },
+                image: '/img/coco.jpg',
+                likeCount: 20,
+                content: '두 번째 포스트 내용'
+            }
+        ];
+
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
@@ -22,7 +52,7 @@ const Map = () => {
                     const container = document.getElementById('map');
                     const options = {
                         center: new window.kakao.maps.LatLng(36.771939307560515, 126.93139316073213), // 초기 중심 위치 설정
-                        level: 2
+                        level: 3
                     };
                     const map = new window.kakao.maps.Map(container, options);
 
@@ -52,10 +82,13 @@ const Map = () => {
 
                     // 첫 번째 마커 추가
                     const markerPosition1 = new window.kakao.maps.LatLng(36.7713718911621, 126.934133774914); // 첫 번째 마커 위치
+                    // 첫 번째 마커 추가
                     const marker1 = new window.kakao.maps.Marker({
                         position: markerPosition1,
                         image: markerImage, // 첫 번째 마커에 이미지 적용
-                        zIndex: 4 // z-index 설정
+                        zIndex: 4, // z-index 설정
+                        strokeWeight: 10, // 테두리 두께 설정
+                        strokeColor: '#000000' // 검정색 테두리 색상 설정
                     });
                     marker1.setMap(map);
 
@@ -105,18 +138,55 @@ const Map = () => {
     }, []);
 
     return (
-        <S.Wrapper>
-        <Header />
-        <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px'}}></div>
-    
-        <S.Dropdown src='/img/dropdown.png' onClick={toggleContent}/>
-        {isContentOpen && (
-            <S.ContentContainer>
-                내용 추가
-            </S.ContentContainer>
-        )}
-        <Menu />
-    </S.Wrapper>
+<S.Wrapper>
+  <Header />
+  <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px'}}></div>
+
+  <S.Dropdown src='/img/dropdown.png' onClick={toggleContent}/>
+
+
+    {isContentOpen && (
+        
+      <S.ContentContainer>
+        
+        <S.PostsContainer>
+        <div style={{ position: 'relative' }}> </div>
+    <S.Catlist>
+      {posts.map(post => (
+        <S.ProfileImage2 key={post.postId} src={post.catDetailResponse.imageUrl} alt="User Profile" />
+      ))}
+    </S.Catlist>
+          {posts.map(post => (
+            <S.Post key={post.postId}>
+              <S.PostProfile>
+                <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
+                <span>{post.catDetailResponse.name}</span>
+                <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
+              </S.PostProfile>
+              <S.PostImage src={post.image} alt="Cat" />
+              <S.PostFooter>
+                <S.PostLikeImg
+                  src='/img/heart_f.png'
+                  alt="Like"
+                  // onClick={() => toggleLike(post.postId)}
+                />
+                <S.PostBookmark
+                  src='/img/bookmark_f.png'
+                  alt="Bookmark"
+                  // onClick={() => toggleBookmark(post.postId)}
+                />
+              </S.PostFooter>
+              <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
+              <S.PostContent>{post.content}</S.PostContent>
+            </S.Post>
+          ))}
+        </S.PostsContainer>
+      </S.ContentContainer>
+    )}
+  
+  <Menu />
+</S.Wrapper>
+
     );
 };
 
