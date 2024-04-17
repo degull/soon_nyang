@@ -29,3 +29,22 @@ export const Title = styled.div`
     font-style: normal;
   }
 `;
+
+export const Dropdown = styled.img`
+  display: flex;
+  width: 35px;
+  position: absolute;
+  top: 270px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  cursor: pointer;
+`;
+
+export const ContentContainer = styled.div`
+  width:100%;
+  position: relative;
+  display: flex;
+  height: 100%;
+  background: #9c9;
+  `;

@@ -47,7 +47,7 @@ export const PostProfile = styled.div`
   }
 
   span {
-    margin-right: 220px;
+    margin-right: 100px;
     font-family: 'KCC-Ganpan';
     @font-face {
       font-family: 'KCC-Ganpan';
@@ -120,3 +120,4 @@ export const ProfileImage = styled.img`
 export const PostLikeImg = styled.img`
   cursor: pointer;
 `;
+
