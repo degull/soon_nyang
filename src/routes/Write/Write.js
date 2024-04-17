@@ -35,6 +35,8 @@ const Write = () => {
                 setLocationObtained(true);
             } else {
                 console.error('이미지에서 GPS 정보를 찾을 수 없습니다.');
+                setUserLocation(null);
+                setLocationObtained(false);
             }
         });
 
@@ -52,36 +54,42 @@ const Write = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // 사용자의 글과 위치 정보를 서버로 전송
+        
         console.log('작성된 내용:', content);
         console.log('업로드된 이미지:', uploadedImage);
         console.log('사용자 위치:', userLocation);
         console.log('선택된 고양이:', selectedCat);
 
-        if (uploadedImage && userLocation) {
-            try {
-                const formData = new FormData();
-                formData.append('image', uploadedImage);
+        if (!uploadedImage) {
+            alert('이미지를 업로드해주세요.');
+            return;
+        }
+        
+        if (!userLocation) {
+            alert('이미지에 위치 정보가 없습니다. 다른 이미지를 업로드하거나 위치를 수동으로 입력해주세요.');
+            return;
+        }
 
-                // 서버로 사용자 위치 정보를 전송하여 위치를 추출하고 받습니다.
-                const response = await fetch('/api/location', {
-                    method: 'POST',
-                    body: JSON.stringify(userLocation),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
+        try {
+            const formData = new FormData();
+            formData.append('image', uploadedImage);
 
-                // 받은 위치 정보를 콘솔에 출력합니다.
-                console.log('서버에서 받은 위치 정보:', data);
+            // 서버로 사용자 위치 정보를 전송하여 위치를 추출하고 받습니다.
+            const response = await fetch('/api/location', {
+                method: 'POST',
+                body: JSON.stringify(userLocation),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
 
-                // 나머지 서버 로직 추가
-            } catch (error) {
-                console.error('위치 정보를 가져오는 중 오류가 발생했습니다.', error);
-            }
-        } else {
-            console.error('사용자 위치 또는 이미지가 없습니다.');
+            // 받은 위치 정보를 콘솔에 출력합니다.
+            console.log('서버에서 받은 위치 정보:', data);
+
+            // 나머지 서버 로직 추가
+        } catch (error) {
+            console.error('위치 정보를 가져오는 중 오류가 발생했습니다.', error);
         }
     };
 
