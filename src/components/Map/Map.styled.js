@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   min-height: 100vh;
   background: #fff;
+  
 `;
 
 export const CatImage = styled.img`
