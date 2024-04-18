@@ -23,8 +23,8 @@ export const PostsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  margin-top: 20px;
-  margin-left: 2px;
+/*   margin-top: 10px;
+  margin-left: 2px; */
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
@@ -33,12 +33,8 @@ export const PostsContainer = styled.div`
 export const Post = styled.div`
   transition: all 0.3s ease;
 
-  img {
-    width: 100%;
-  }
-
   div {
-    margin-top: 10px;
+    margin-top: 0px;
   }
 `;
 
@@ -130,4 +126,75 @@ export const Dropdown = styled.img`
   z-index: 1;
   cursor: pointer;
   transition: transform 0.3s ease; // Add transition for smooth animation
+`;
+
+export const PostProfile = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 내용을 양쪽 끝으로 정렬 */
+  margin-bottom: 10px;
+`;
+
+export const ProfileImage = styled.img`
+  border-radius: 50%;
+  width: 30px; /* 이미지의 너비 조정 */
+  height: 30px; /* 이미지의 높이는 자동으로 조정되도록 설정 */
+`;
+
+
+export const PostNickname = styled.span`
+  font-size: 14px;
+ font-family: 'KOTRAHOPE';
+ @font-face {
+    font-family: 'KOTRAHOPE';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+text-align: right;
+`;
+
+export const PostImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+export const PostFooter = styled.div`
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const PostLikeImg = styled.img`
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+`;
+
+export const PostBookmark = styled.img`
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+`;
+
+export const PostLikes = styled.div`
+   font-size: 13px;
+  font-family: 'KOTRAHOPE';
+  @font-face {
+    font-family: 'KOTRAHOPE';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
+
+export const PostContent = styled.div`
+  font-size: 12px;
+  font-family: 'Ownglyph_meetme-Rg';
+  @font-face {
+    font-family: 'Ownglyph_meetme-Rg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 `;

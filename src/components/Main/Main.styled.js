@@ -20,34 +20,24 @@ export const PostsContainer = styled.div`
 `;
 
 export const Post = styled.div`
-  /* 기존 스타일 코드 */
   transition: all 0.3s ease;
-  
-  img {
-    width: 100%;
-  }
-
-  div {
-    margin-top: 10px;
-  }
 `;
 
 export const PostProfile = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 내용을 양쪽 끝으로 정렬 */
+  justify-content: space-between;
   margin-bottom: 10px;
-  
 
   img {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     margin-right: 10px;
   }
 
   span {
-    margin-right: 100px;
+    margin-right: 10px;
     font-family: 'KCC-Ganpan';
     @font-face {
       font-family: 'KCC-Ganpan';
@@ -59,19 +49,19 @@ export const PostProfile = styled.div`
 `;
 
 export const PostImage = styled.img`
-
+  width: 100%;
 `;
 
 export const PostNickname = styled.div`
- font-size: 14px;
- font-family: 'KOTRAHOPE';
- @font-face {
+  font-size: 14px;
+  font-family: 'KOTRAHOPE';
+  @font-face {
     font-family: 'KOTRAHOPE';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-text-align: right;
+  }
+  text-align: right;
 `;
 
 export const PostFooter = styled.div`
@@ -105,7 +95,7 @@ export const PostContent = styled.div`
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
+  }
 `;
 
 export const PostBookmark = styled.img`
@@ -119,5 +109,6 @@ export const ProfileImage = styled.img`
 
 export const PostLikeImg = styled.img`
   cursor: pointer;
+  width: 20px;
+  height: 20px;
 `;
-
