@@ -33,11 +33,9 @@ export const PostProfile = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    margin-right: 10px;
   }
 
   span {
-    margin-right: 10px;
     font-family: 'KCC-Ganpan';
     @font-face {
       font-family: 'KCC-Ganpan';
@@ -61,7 +59,6 @@ export const PostNickname = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  text-align: right;
 `;
 
 export const PostFooter = styled.div`
@@ -85,6 +82,7 @@ export const PostLikes = styled.span`
     font-weight: normal;
     font-style: normal;
   }
+  margin: 10px;
 `;
 
 export const PostContent = styled.div`
@@ -96,6 +94,7 @@ export const PostContent = styled.div`
     font-weight: normal;
     font-style: normal;
   }
+  margin: 10px;
 `;
 
 export const PostBookmark = styled.img`
@@ -105,10 +104,23 @@ export const PostBookmark = styled.img`
 export const ProfileImage = styled.img`
   border-radius: 50%;
   box-shadow: 0 0 0 2px #FFD700;
+  margin: 10px;
+`;
+
+export const CatName = styled.div`
+font-family: 'KOTRAHOPE';
+  @font-face {
+    font-family: 'KOTRAHOPE';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  margin-right: 320px;
 `;
 
 export const PostLikeImg = styled.img`
   cursor: pointer;
   width: 20px;
   height: 20px;
+  margin: 10px;
 `;

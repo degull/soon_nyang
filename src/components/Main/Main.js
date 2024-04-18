@@ -55,7 +55,7 @@ export default function Main() {
           <S.Post key={post.postId}>
             <S.PostProfile>
             <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />              
-            <span>{post.catDetailResponse.name}</span>
+            <S.CatName>{post.catDetailResponse.name}</S.CatName>
               <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
             </S.PostProfile>
             <S.PostImage src={post.image} alt="Cat" />

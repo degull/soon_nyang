@@ -73,10 +73,25 @@ export const CatImage = styled.img`
   cursor: pointer;
 `;
 
-export const CatName = styled.span`
-  font-size: 11px;
+export const CatName1 = styled.span`
+  font-size: 10px;
   color: #333;
-  margin-left: 15px;
+  margin-left: -5px;
+  font-family: "SBAggroB";
+  @font-face {
+    font-family: "SBAggroB";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
+
+
+export const CatName2 = styled.span`
+  font-size: 12px;
+  color: #333;
+  margin-left: 13px;
   font-family: "SBAggroB";
   @font-face {
     font-family: "SBAggroB";
@@ -170,8 +185,9 @@ export const PostFooter = styled.div`
 
 export const PostLikeImg = styled.img`
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  margin-left: 350px;
 `;
 
 export const PostBookmark = styled.img`
@@ -189,6 +205,7 @@ export const PostLikes = styled.div`
     font-weight: normal;
     font-style: normal;
   }
+  margin: 10px;
 `;
 
 export const PostContent = styled.div`
@@ -201,4 +218,8 @@ export const PostContent = styled.div`
     font-weight: normal;
     font-style: normal;
 }
+`;
+export const PostLikesContainer = styled.div`
+    display: flex;
+    align-items: center;
 `;

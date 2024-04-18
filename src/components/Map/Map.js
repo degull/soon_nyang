@@ -15,8 +15,12 @@ const Map = () => {
     const [likedPosts, setLikedPosts] = useState([]);
     const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
 
-    const toggleLike = (postId) => {
-        // Logic to toggle like for the given postId
+    const toggleLike = postId => {
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(likedPosts.filter(id => id !== postId));
+        } else {
+          setLikedPosts([...likedPosts, postId]);
+        }
       };
       
       const toggleBookmark = (postId) => {
@@ -188,7 +192,7 @@ const Map = () => {
                                     <S.CatContainer key={index} onClick={() => handleCatClick(cat.id)}> {/* Handle click event */}
                                         <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <S.CatName>{cat.name}</S.CatName>
+                                            <S.CatName1>{cat.name}</S.CatName1>
 
                                             
                                         </div>
@@ -213,12 +217,22 @@ const Map = () => {
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                     <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
                     <div>
-                        <S.CatName>{post.catDetailResponse.name}</S.CatName>
+                        <S.CatName2>{post.catDetailResponse.name}</S.CatName2>
                         <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
                     </div>
                 </div>
 
                             <S.PostImage src={post.image} alt="Cat" />
+
+                            <S.PostLikesContainer>
+                            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
+                            <S.PostLikeImg
+                                src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
+                                alt="Like"
+                                onClick={() => toggleLike(post.postId)}
+                            />
+                        </S.PostLikesContainer>
+
                             <S.PostContent>{post.content}</S.PostContent>
                         </div>
                     </S.Post>
