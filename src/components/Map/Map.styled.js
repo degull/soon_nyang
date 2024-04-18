@@ -76,7 +76,7 @@ export const CatImage = styled.img`
 export const CatName = styled.span`
   font-size: 11px;
   color: #333;
-  margin-right: 15px;
+  margin-left: 15px;
   font-family: "SBAggroB";
   @font-face {
     font-family: "SBAggroB";
@@ -137,26 +137,29 @@ export const PostProfile = styled.div`
 
 export const ProfileImage = styled.img`
   border-radius: 50%;
-  width: 30px; /* 이미지의 너비 조정 */
-  height: 30px; /* 이미지의 높이는 자동으로 조정되도록 설정 */
+  margin: 10px;
+  width: 35px; /* 이미지의 너비 조정 */
+  height: 35px; /* 이미지의 높이는 자동으로 조정되도록 설정 */
 `;
 
 
 export const PostNickname = styled.span`
   font-size: 14px;
- font-family: 'KOTRAHOPE';
- @font-face {
+  font-family: 'KOTRAHOPE';
+  margin-left: 250px;
+  @font-face {
     font-family: 'KOTRAHOPE';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-text-align: right;
+  }
 `;
+
 
 export const PostImage = styled.img`
   width: 100%;
   height: auto;
+  margin-bottom: 10px;
 `;
 
 export const PostFooter = styled.div`
@@ -189,7 +192,8 @@ export const PostLikes = styled.div`
 `;
 
 export const PostContent = styled.div`
-  font-size: 12px;
+  margin: 10px;
+  font-size: 13px;
   font-family: 'Ownglyph_meetme-Rg';
   @font-face {
     font-family: 'Ownglyph_meetme-Rg';

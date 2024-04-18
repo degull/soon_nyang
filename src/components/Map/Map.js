@@ -211,12 +211,12 @@ const Map = () => {
                     <S.Post key={post.postId}>
                         <div style={{ width: '450px', height: '100%', backgroundColor: '#fff', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-    <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
-    <div>
-        <S.CatName>{post.catDetailResponse.name}</S.CatName>
-        <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
-    </div>
-</div>
+                    <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
+                    <div>
+                        <S.CatName>{post.catDetailResponse.name}</S.CatName>
+                        <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
+                    </div>
+                </div>
 
                             <S.PostImage src={post.image} alt="Cat" />
                             <S.PostContent>{post.content}</S.PostContent>
