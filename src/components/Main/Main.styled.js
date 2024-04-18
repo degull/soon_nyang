@@ -108,14 +108,15 @@ export const ProfileImage = styled.img`
 `;
 
 export const CatName = styled.div`
-font-family: 'KOTRAHOPE';
+  font-family: "SBAggroB";
   @font-face {
-    font-family: 'KOTRAHOPE';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-family: "SBAggroB";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
+      format("woff");
     font-weight: normal;
     font-style: normal;
   }
-  margin-right: 320px;
+  margin-right: 300px;
 `;
 
 export const PostLikeImg = styled.img`

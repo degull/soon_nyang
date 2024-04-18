@@ -21,11 +21,7 @@ const Map = () => {
         } else {
           setLikedPosts([...likedPosts, postId]);
         }
-      };
-      
-      const toggleBookmark = (postId) => {
-        // Logic to toggle bookmark for the given postId
-      };
+    };
 
 
     const toggleContent = () => {
@@ -35,22 +31,42 @@ const Map = () => {
 
     const handleCatClick = async (catId) => {
         try {
-            const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts?catId=${catId}&limit=10`);
-            if (!response.ok) {
-                throw new Error('고양이 글을 불러오는 데 실패했습니다.');
+            setSelectedCatId(catId);
+    
+            const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}/spots`);
+            if (!locationResponse.ok) {
+                throw new Error('Failed to load cat locations.');
             }
-            const data = await response.json();
-            console.log('고양이 글:', data); // 응답 데이터 로깅
-            if (Array.isArray(data.content)) {
-                setCatPosts(data.content); // data.content가 배열인 경우 catPosts 설정
+            const locationData = await locationResponse.json();
+            console.log('Cat locations:', locationData);
+    
+            const postIdArray = locationData.map(location => location.postId);
+    
+            const postResponse = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postIdList: postIdArray
+                })
+            });
+    
+            if (!postResponse.ok) {
+                throw new Error('Failed to load cat posts.');
+            }
+            const postData = await postResponse.json();
+            console.log('Cat posts:', postData);
+    
+            if (Array.isArray(postData.content)) {
+                setCatPosts(postData.content);
             } else {
-                throw new Error('잘못된 응답 데이터');
+                throw new Error('Invalid response data');
             }
         } catch (error) {
-            console.error('고양이 글을 불러오는 중 오류 발생:', error);
+            console.error('Error loading cat data:', error);
         }
     };
-    
     
     
     
@@ -60,12 +76,12 @@ const Map = () => {
             try {
                 const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/5/spots');
                 if (!response.ok) {
-                    throw new Error('고양이 위치를 불러오는 데 실패했습니다.');
+                    throw new Error('Failed to load cat spots.');
                 }
                 const data = await response.json();
                 setCatSpots(data);
             } catch (error) {
-                console.error('고양이 위치를 불러오는 중 오류가 발생했습니다:', error);
+                console.error('Error loading cat spots:', error);
             }
         };
 
@@ -87,7 +103,7 @@ const Map = () => {
                 });
             };
             script.onerror = () => {
-                console.error('카카오 맵 API 스크립트 로드 중 오류가 발생했습니다.');
+                console.error('Error loading Kakao Map API script.');
             };
             document.head.appendChild(script);
         };
@@ -102,31 +118,23 @@ const Map = () => {
 
                 const map = new window.kakao.maps.Map(container, options);
 
-                // catSpots 배열을 순회 -> 각 위치에 마커 표시
-                // 디자인 수정
                 catSpots.forEach((spot) => {
                     const markerPosition = new window.kakao.maps.LatLng(spot.latitude, spot.longitude);
-
-                    // 마커 생성
                     const marker = new window.kakao.maps.Marker({
                         map: map,
                         position: markerPosition,
                     });
 
-                    // 마커 위에 표시할 정보창 생성
-                    // 프로필로 수정
                     const infowindow = new window.kakao.maps.InfoWindow({
-                        content: `<div>위도: ${spot.latitude}, 경도: ${spot.longitude}</div>`,
+                        content: `<div>${spot.catName}</div>`,
                     });
 
-                    // 마커를 클릭했을 때 정보창 표시
-                    // 프로필로 수정
                     window.kakao.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
                     });
                 });
             } else {
-                console.error('맵 컨테이너를 찾을 수 없습니다.');
+                console.error('Map container not found.');
             }
         };
 
@@ -138,17 +146,41 @@ const Map = () => {
             try {
                 const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
                 if (!response.ok) {
-                    throw new Error('고양이 목록을 불러오는 데 실패했습니다.');
+                    throw new Error('Failed to load cat list.');
                 }
                 const data = await response.json();
                 setCats(data);
             } catch (error) {
-                console.error('고양이 목록을 불러오는 중 오류가 발생했습니다:', error);
+                console.error('Error loading cat list:', error);
             }
         };
 
         fetchCats();
     }, []);
+
+    useEffect(() => {
+        const fetchCatPosts = async () => {
+            if (selectedCatId !== null) {
+                try {
+                    const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts?catId=${selectedCatId}&limit=10`);
+                    if (!response.ok) {
+                        throw new Error('Failed to load cat posts.');
+                    }
+                    const data = await response.json();
+                    console.log('Cat posts:', data);
+                    if (Array.isArray(data.content)) {
+                        setCatPosts(data.content);
+                    } else {
+                        throw new Error('Invalid response data');
+                    }
+                } catch (error) {
+                    console.error('Error loading cat posts:', error);
+                }
+            }
+        };
+
+        fetchCatPosts();
+    }, [selectedCatId]);
 
     const scrollLeft = () => {
         if (catListRef.current) {
@@ -193,13 +225,10 @@ const Map = () => {
                                         <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <S.CatName1>{cat.name}</S.CatName1>
-
-                                            
                                         </div>
                                     </S.CatContainer>
                                 ))}
                             </S.Catlist>
-
 
                             {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
                                 <S.ArrowButton src='/img/right_arrow.png' onClick={scrollRight} />
@@ -209,29 +238,29 @@ const Map = () => {
                 </S.ContentContainer>
             )}
 
-            {/* 게시글 출력 */}
+            {/* Cat posts */}
             <S.PostsContainer>
                 {catPosts.map(post => (
                     <S.Post key={post.postId}>
                         <div style={{ width: '450px', height: '100%', backgroundColor: '#fff', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
-                    <div>
-                        <S.CatName2>{post.catDetailResponse.name}</S.CatName2>
-                        <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
-                    </div>
-                </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
+                                <div>
+                                    <S.CatName2>{post.catDetailResponse.name}</S.CatName2>
+                                    <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
+                                </div>
+                            </div>
 
                             <S.PostImage src={post.image} alt="Cat" />
 
                             <S.PostLikesContainer>
-                            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
-                            <S.PostLikeImg
-                                src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
-                                alt="Like"
-                                onClick={() => toggleLike(post.postId)}
-                            />
-                        </S.PostLikesContainer>
+                                <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
+                                <S.PostLikeImg
+                                    src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
+                                    alt="Like"
+                                    onClick={() => toggleLike(post.postId)}
+                                />
+                            </S.PostLikesContainer>
 
                             <S.PostContent>{post.content}</S.PostContent>
                         </div>
