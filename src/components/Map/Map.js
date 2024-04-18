@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as S from './Map.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
@@ -6,11 +6,15 @@ import Menu from '../Menu/Menu';
 const Map = () => {
     const [isContentOpen, setIsContentOpen] = useState(false);
     const [catSpots, setCatSpots] = useState([]);
+    const [cats, setCats] = useState([]);
+    const [isDropdownRotated, setIsDropdownRotated] = useState(false);
+    const catListRef = useRef(null);
 
     const toggleContent = () => {
         setIsContentOpen(!isContentOpen);
+        setIsDropdownRotated(!isDropdownRotated);
     };
-
+    
     useEffect(() => {
         const fetchCatSpots = async () => {
             try {
@@ -88,20 +92,74 @@ const Map = () => {
     
         loadMapScript();
     }, [catSpots]);
+
+
+    useEffect(() => {
+        const fetchCats = async () => {
+            try {
+                const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
+                if (!response.ok) {
+                    throw new Error('고양이 목록을 불러오는 데 실패했습니다.');
+                }
+                const data = await response.json();
+                setCats(data);
+            } catch (error) {
+                console.error('고양이 목록을 불러오는 중 오류가 발생했습니다:', error);
+            }
+        };
+
+        fetchCats();
+    }, []);
     
-    
+
+    const scrollLeft = () => {
+        if (catListRef.current) {
+            catListRef.current.scrollBy({
+                left: -200,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    const scrollRight = () => {
+        if (catListRef.current) {
+            catListRef.current.scrollBy({
+                left: 200,
+                behavior: 'smooth',
+            });
+        }
+    };
 
     return (
         <S.Wrapper>
             <Header />
             <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px' }}></div>
 
-            <S.Dropdown src='/img/dropdown.png' onClick={toggleContent} />
+            <S.Dropdown 
+    src='/img/dropdown.png' 
+    onClick={toggleContent} 
+    rotate={isDropdownRotated ? 'rotate(180deg)' : 'rotate(0deg)'} 
+/>
 
             {isContentOpen && (
                 <S.ContentContainer>
                     <S.PostsContainer>
-                        {/* 고양이 위치 &  포스트 목록 렌더링 */}
+                        <S.CatlistContainer>
+                            {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
+                                <S.ArrowButton src='/img/right_arrow.png' onClick={scrollLeft} />
+                            )}
+                            <S.Catlist ref={catListRef}>
+                                {cats.map((cat, index) => (
+                                    <S.CatContainer key={index}>
+                                        <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
+                                        <S.CatName>{cat.name}</S.CatName>
+                                    </S.CatContainer>
+                                ))}
+                            </S.Catlist>
+                            {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
+                                <S.ArrowButton src='/img/right_arrow.png' onClick={scrollRight} />
+                            )}
+                        </S.CatlistContainer>
                     </S.PostsContainer>
                 </S.ContentContainer>
             )}
