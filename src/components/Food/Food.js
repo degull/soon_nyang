@@ -4,8 +4,8 @@ import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 
 const locations = [
-   { title: '급식소1', lat: 37.506488265356, lng: 126.99290953278},
-   { title: '급식소2', lat: 37.501381407413, lng: 127.01237392298 },
+   { title: '급식소1', lat: 36.771801976020804, lng: 126.93154729815382},
+   { title: '급식소2', lat: 36.77182069456484, lng: 126.93276820118179 },
    // 아래 계속 위치 추가
 ];
 
@@ -34,26 +34,34 @@ export default function Food() {
          const container = document.getElementById('map');
          if (container) {
             const options = {
-               center: new window.kakao.maps.LatLng(37.506488265356, 126.99290953278),
+               center: new window.kakao.maps.LatLng(36.769342203757525, 126.93203111648273),
                level: 5,
             };
-
+      
             const map = new window.kakao.maps.Map(container, options);
-
+      
             locations.forEach((el) => {
+               const markerImage = new window.kakao.maps.MarkerImage(
+                  '/img/food_mark.png',
+                  new window.kakao.maps.Size(60, 60)
+               );
+      
                const marker = new window.kakao.maps.Marker({
                   map: map,
                   position: new window.kakao.maps.LatLng(el.lat, el.lng),
                   title: el.title,
+                  image: markerImage, // 마커 이미지 설정
                });
-
+      
                window.kakao.maps.event.addListener(marker, 'click', () => {
+                  // 마커 클릭 이벤트 처리
                });
             });
          } else {
             console.error('맵 컨테이너를 찾을 수 없습니다.');
          }
       };
+      
 
       loadMapScript();
    }, []);
@@ -61,8 +69,7 @@ export default function Food() {
    return (
       <S.Wrapper>
          <Header />
-         <S.Title>급식소 위치</S.Title>
-         <div id="map" style={{ width: '100%', height: '400px' }}></div>
+         <div id="map" style={{ width: '100%', height: '400px', marginBottom:'170px'}}></div>
          <Menu />
       </S.Wrapper>
    );

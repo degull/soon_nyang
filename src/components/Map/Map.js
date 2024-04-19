@@ -123,21 +123,26 @@ const Map = () => {
                     center: new window.kakao.maps.LatLng(36.7713718911650, 126.934133774920),
                     level: 3,
                 };
-
+        
                 const map = new window.kakao.maps.Map(container, options);
-
+        
                 // 고양이 위치 데이터를 이용하여 마커 출력
                 catSpots.forEach((spot) => {
                     const markerPosition = new window.kakao.maps.LatLng(spot.latitude, spot.longitude);
+                    const markerImage = new window.kakao.maps.MarkerImage(
+                        '/img/cat_mark.png',
+                        new window.kakao.maps.Size(35, 35)
+                    );
                     const marker = new window.kakao.maps.Marker({
                         map: map,
                         position: markerPosition,
+                        image: markerImage, // 마커 이미지 설정
                     });
-
+        
                     const infowindow = new window.kakao.maps.InfoWindow({
                         content: `<div>${spot.catName}</div>`,
                     });
-
+        
                     window.kakao.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
                     });
@@ -146,6 +151,7 @@ const Map = () => {
                 console.error('Map container not found.');
             }
         };
+        
 
         loadMapScript();
     }, [catSpots]);

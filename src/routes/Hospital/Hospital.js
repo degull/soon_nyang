@@ -1,4 +1,3 @@
-import React from 'react';
 import * as S from './Hospital.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
