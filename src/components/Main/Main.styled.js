@@ -9,17 +9,22 @@ export const Wrapper = styled.div`
 `;
 
 export const PostsContainer = styled.div`
-  display: grid;
+  width: 100%;
+  height: 100%;
+  /* display: grid; */
+  display: block;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 35px;
   margin-left: 2px;
+  margin-bottom: 65px;
   @media (max-width: 768px) { /* 모바일 화면 */
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 `;
 
 export const Post = styled.div`
+width: 100%;
   transition: all 0.3s ease;
 `;
 
@@ -116,7 +121,10 @@ export const CatName = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin-right: 300px;
+  margin-right: 270px;
+ display: flex;
+ text-align: center;
+ justify-content: center;
 `;
 
 export const PostLikeImg = styled.img`

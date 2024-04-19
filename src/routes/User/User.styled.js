@@ -10,12 +10,14 @@ export const Wrapper = styled.div`
 `;
 export const UserProfileContainer = styled.div`
   text-align: center;
-  margin-top: 20px;
+  margin-top: 45px;
+  margin-bottom: 70px;
 `;
 
 export const LoginSignupButtonsContainer = styled.div`
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: 75px;
 `;
 
 export const CatImage = styled.img`

@@ -25,6 +25,7 @@ export const PostsContainer = styled.div`
   gap: 20px;
 /*   margin-top: 10px;
   margin-left: 2px; */
+  margin-bottom: 70px;
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }

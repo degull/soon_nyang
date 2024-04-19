@@ -15,7 +15,8 @@ export const CatList = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  margin-top: 25px;
+  margin-top: 45px;
+  margin-bottom: 70px;
   /* 각각의 고양이 박스들을 감싸는 스타일 */
 `;
 

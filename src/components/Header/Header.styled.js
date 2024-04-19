@@ -18,6 +18,10 @@ export const HeaderContainer = styled.div`
    display: flex;
    align-items: center;
    justify-content: center;
+   position: fixed;
+   top: 0;
+   background: #fff; /* 배경색을 흰색으로 설정 */
+   z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
 `;
 
 export const Title = styled.div`
@@ -44,13 +48,10 @@ export const Food = styled.img`
    cursor: pointer;
 `;
 
-
 export const Map = styled.img`
    position: absolute;
    width: 25px;
    right: 22px;
    margin-top: -11px;
    cursor: pointer;
-
 `;
-

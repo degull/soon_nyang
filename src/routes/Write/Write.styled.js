@@ -11,7 +11,8 @@ export const Wrapper = styled.div`
 export const WriteForm = styled.form`
   width: 100%;
   max-width: 400px;
-  margin-top: 20px;
+  margin-top: 45px;
+  margin-bottom: 70px;
 `;
 
 export const DropzoneContainer = styled.div`

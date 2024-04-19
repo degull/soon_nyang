@@ -217,7 +217,7 @@ const Map = () => {
     return (
         <S.Wrapper>
             <Header />
-            <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px' }}></div>
+            <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px', marginTop:'30px' }}></div>
 
             <S.Dropdown
                 src='/img/dropdown.png'

@@ -8,6 +8,9 @@ export const Wrapper = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 `;
 
 export const MenuContainer = styled.div`
