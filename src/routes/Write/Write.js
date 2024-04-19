@@ -23,8 +23,8 @@ const Write = () => {
         script.onload = () => {
             window.kakao.maps.load(() => {
                 const options = {
-                    center: new window.kakao.maps.LatLng(37.5665, 126.9780),
-                    level: 10
+                    center: new window.kakao.maps.LatLng(36.7713718911621, 126.934133774914),
+                    level: 3
                 };
                 map.current = new window.kakao.maps.Map(mapContainer.current, options);
                 window.kakao.maps.event.addListener(map.current, 'click', handleMapClick);
@@ -54,20 +54,30 @@ const Write = () => {
     const onDrop = useCallback(acceptedFiles => {
         const newImages = [...uploadedImages, ...acceptedFiles];
         setUploadedImages(newImages);
+
+        console.log('첨부한 이미지 정보:', newImages);
     }, [uploadedImages]);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', multiple: true });
 
     const handleContentChange = (event) => {
         setContent(event.target.value);
+        console.log('텍스트 내용:', event.target.value);
     };
 
     const handleCatSelect = (cat) => {
         setSelectedCat(cat);
+        console.log('선택한 고양이:', cat);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        console.log('작성된 내용:', content);
+        console.log('업로드된 이미지:', uploadedImages);
+        console.log('사용자 위치:', userLocation);
+        console.log('선택된 고양이:', selectedCat);
+        
         // handleSubmit 로직 구현
     };
 
@@ -91,7 +101,7 @@ const Write = () => {
                     placeholder="여기에 글을 작성하세요..."
                 />
                 <CatList onSelect={handleCatSelect} />
-                <div ref={mapContainer} style={{ width: '100%', height: '400px', marginBottom: '20px' }} />
+                <div ref={mapContainer} style={{ width: '100%', height: '300px', marginBottom: '20px' }} />
                 <S.SubmitButton type="submit">게시하기</S.SubmitButton>
             </S.WriteForm>
             <Menu />

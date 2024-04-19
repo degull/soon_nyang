@@ -3,18 +3,20 @@ import * as S from './Map.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 
+
 const Map = () => {
-    const [isContentOpen, setIsContentOpen] = useState(false);
-    const [catSpots, setCatSpots] = useState([]);
-    const [cats, setCats] = useState([]);
-    const [isDropdownRotated, setIsDropdownRotated] = useState(false);
-    const [selectedCatId, setSelectedCatId] = useState(null); // State to track selected cat id
-    const [catPosts, setCatPosts] = useState([]); // State to store cat posts
-    const catListRef = useRef(null);
+    const [isContentOpen, setIsContentOpen] = useState(false);  // dropdown
+    const [catSpots, setCatSpots] = useState([]);   // 고양이 위치 데이터
+    const [cats, setCats] = useState([]);   // 고양이 목록(catList)
+    const [isDropdownRotated, setIsDropdownRotated] = useState(false);  // 드롭다운 회전 상태
+    const [selectedCatId, setSelectedCatId] = useState(null); // 선택된 고양이 ID
+    const [catPosts, setCatPosts] = useState([]);   // 고양이 게시물 목록
+    const catListRef = useRef(null);    // 고양이 목록 참조
 
-    const [likedPosts, setLikedPosts] = useState([]);
-    const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+    const [likedPosts, setLikedPosts] = useState([]);   // 좋아요 상태관리
+    const [bookmarkedPosts, setBookmarkedPosts] = useState([]); // 지울거
 
+    // 좋아요 토글 함수
     const toggleLike = postId => {
         if (likedPosts.includes(postId)) {
           setLikedPosts(likedPosts.filter(id => id !== postId));
@@ -23,17 +25,20 @@ const Map = () => {
         }
     };
 
-
+    // 콘텐츠 토글 함수
     const toggleContent = () => {
         setIsContentOpen(!isContentOpen);
         setIsDropdownRotated(!isDropdownRotated);
     };
 
+    // 고양이 클릭 시 처리 함수
     const handleCatClick = async (catId) => {
         try {
             setSelectedCatId(catId);
-    
-            const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}/spots`);
+            
+            /* 마커 출력 */
+            // 해당 고양이 위치 데이터 가져오기
+            const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/6/spots`);
             if (!locationResponse.ok) {
                 throw new Error('Failed to load cat locations.');
             }
@@ -42,6 +47,8 @@ const Map = () => {
     
             const postIdArray = locationData.map(location => location.postId);
     
+            /* Id별 출력 */
+            // 해당 고양이의 게시물 데이터 가져오기
             const postResponse = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', {
                 method: 'POST',
                 headers: {
@@ -70,7 +77,7 @@ const Map = () => {
     
     
     
-
+// useEffect를 사용하여 고양이 위치 데이터 가져오기
     useEffect(() => {
         const fetchCatSpots = async () => {
             try {
@@ -88,6 +95,7 @@ const Map = () => {
         fetchCatSpots();
     }, []);
 
+     // useEffect를 사용하여 카카오지도 API 로드하기
     useEffect(() => {
         const loadMapScript = () => {
             const script = document.createElement('script');
@@ -118,6 +126,7 @@ const Map = () => {
 
                 const map = new window.kakao.maps.Map(container, options);
 
+                // 고양이 위치 데이터를 이용하여 마커 출력
                 catSpots.forEach((spot) => {
                     const markerPosition = new window.kakao.maps.LatLng(spot.latitude, spot.longitude);
                     const marker = new window.kakao.maps.Marker({
@@ -141,6 +150,8 @@ const Map = () => {
         loadMapScript();
     }, [catSpots]);
 
+
+     // useEffect를 사용하여 고양이 목록 가져오기
     useEffect(() => {
         const fetchCats = async () => {
             try {
@@ -158,6 +169,7 @@ const Map = () => {
         fetchCats();
     }, []);
 
+    // useEffect를 사용하여 선택된 고양이의 게시물 가져오기
     useEffect(() => {
         const fetchCatPosts = async () => {
             if (selectedCatId !== null) {
@@ -182,6 +194,8 @@ const Map = () => {
         fetchCatPosts();
     }, [selectedCatId]);
 
+
+    // 고양이 목록 스크롤 좌우 이동 함수
     const scrollLeft = () => {
         if (catListRef.current) {
             catListRef.current.scrollBy({
