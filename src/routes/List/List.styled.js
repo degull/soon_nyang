@@ -1,5 +1,3 @@
-// List.styled.js
-
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -7,15 +5,16 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 100vh;
 `;
 
 export const CatList = styled.div`
+  width: 100%;
+  max-width: 520px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  margin-top: 45px;
+  margin-top: 100px;
   margin-bottom: 70px;
   /* 각각의 고양이 박스들을 감싸는 스타일 */
 `;

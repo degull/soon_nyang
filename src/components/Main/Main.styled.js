@@ -5,16 +5,16 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 `;
 
 export const PostsContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* display: grid; */
-  display: block;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  max-width: 520px;
+  display: grid;
+/*   display: block; */
+/*   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));*/  gap: 20px;
   margin-top: 35px;
   margin-left: 2px;
   margin-bottom: 65px;
@@ -35,8 +35,8 @@ export const PostProfile = styled.div`
   margin-bottom: 10px;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
   }
 
@@ -121,10 +121,10 @@ export const CatName = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin-right: 270px;
- display: flex;
+  margin-right: 310px;
+/*  display: flex;
  text-align: center;
- justify-content: center;
+ justify-content: center; */
 `;
 
 export const PostLikeImg = styled.img`

@@ -3,14 +3,15 @@ import { useDropzone } from 'react-dropzone';
 import * as S from './Write.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
-import CatList from '../../components/CatList/CatList';
+import axios from 'axios';
+import Select from 'react-select';
 
 const Write = () => {
     const [content, setContent] = useState('');
     const [uploadedImages, setUploadedImages] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
-    const [locationObtained, setLocationObtained] = useState(false);
-    const [selectedCat, setSelectedCat] = useState(null);
+    const [selectedCat, setSelectedCat] = useState('');
+    const [catOptions, setCatOptions] = useState([]);
     const mapContainer = useRef(null);
     const map = useRef(null);
 
@@ -39,51 +40,93 @@ const Write = () => {
         };
     }, []);
 
+    const handleCatSelect = (selectedOption) => {
+        setSelectedCat(selectedOption);
+    };
+
+    useEffect(() => {
+        const fetchCats = async () => {
+            try {
+                const response = await axios.get('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
+                setCatOptions(response.data);
+            } catch (error) {
+                console.error('고양이 정보를 불러오는 동안 오류가 발생했습니다:', error);
+            }
+        };
+
+        fetchCats();
+    }, []);
+
     const handleMapClick = (mouseEvent) => {
         const latlng = mouseEvent.latLng;
         setUserLocation({
             latitude: latlng.getLat(),
             longitude: latlng.getLng()
         });
-        setLocationObtained(true);
 
         console.log('클릭한 위치의 위도:', latlng.getLat());
         console.log('클릭한 위치의 경도:', latlng.getLng());
     };
 
     const onDrop = useCallback(acceptedFiles => {
-        const newImages = [...uploadedImages, ...acceptedFiles];
-        setUploadedImages(newImages);
-
-        console.log('첨부한 이미지 정보:', newImages);
-    }, [uploadedImages]);
+        setUploadedImages(acceptedFiles);
+    }, []);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', multiple: true });
 
     const handleContentChange = (event) => {
         setContent(event.target.value);
-        console.log('텍스트 내용:', event.target.value);
     };
 
-    const handleCatSelect = (cat) => {
-        setSelectedCat(cat);
-        console.log('선택한 고양이:', cat);
-    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         
-        console.log('작성된 내용:', content);
-        console.log('업로드된 이미지:', uploadedImages);
-        console.log('사용자 위치:', userLocation);
-        console.log('선택된 고양이:', selectedCat);
-        
-        // handleSubmit 로직 구현
+        try {
+            const formData = new FormData();
+            formData.append('content', content);
+            formData.append('latitude', userLocation.latitude);
+            formData.append('longitude', userLocation.longitude);
+            formData.append('category', selectedCat);
+            
+            uploadedImages.forEach((file, index) => {
+                formData.append(`image${index}`, file);
+            });
+
+            const response = await axios.post('YOUR_ENDPOINT_HERE', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('게시물 작성 오류:', error);
+        }
     };
 
     return (
         <S.Wrapper>
             <Header />
+            <S.CatOption>
+                    <S.CustomSelect>
+                        <Select
+                            id="categorySelect"
+                            value={selectedCat}
+                            onChange={handleCatSelect}
+                            options={catOptions.map(cat => ({
+                                value: cat.name,
+                                label: (
+                                    <div>
+                                        <S.CatImage src={cat.imageUrl} alt={cat.name} />
+                                        <span>{cat.name}</span>
+                                    </div>
+                                )
+                            }))}
+                        />
+                    </S.CustomSelect>
+                </S.CatOption>
             <S.WriteForm onSubmit={handleSubmit}>
                 <S.DropzoneContainer {...getRootProps()}>
                     <input {...getInputProps()} />
@@ -92,17 +135,17 @@ const Write = () => {
                             <S.UploadedImage key={index} src={URL.createObjectURL(image)} alt={`Uploaded ${index}`} />
                         ))
                     ) : (
-                        <S.DropzoneText>클릭 또는 이미지를 끌어다 놓아 업로드하세요</S.DropzoneText>
+                        <S.DropzoneText>이미지를 업로드하세요</S.DropzoneText>
                     )}
                 </S.DropzoneContainer>
                 <S.TextArea
                     value={content}
                     onChange={handleContentChange}
-                    placeholder="여기에 글을 작성하세요..."
+                    placeholder="문구를 추가하세요..."
                 />
-                <CatList onSelect={handleCatSelect} />
+
                 <div ref={mapContainer} style={{ width: '100%', height: '300px', marginBottom: '20px' }} />
-                <S.SubmitButton type="submit">게시하기</S.SubmitButton>
+                <S.SubmitButton type="submit">등록</S.SubmitButton>
             </S.WriteForm>
             <Menu />
         </S.Wrapper>
