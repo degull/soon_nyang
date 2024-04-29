@@ -14,7 +14,8 @@ export const CatOption = styled.div`
   width: 100%;
   height: 100%;
   max-width: 400px;
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 10px;
 `;
 
 export const Select = styled.select`
@@ -23,6 +24,7 @@ export const Select = styled.select`
     border-radius: 20px;
     width: 100%;
     height: 45px;
+    
 `;
 
 export const Option = styled.option`
@@ -44,6 +46,7 @@ export const WriteForm = styled.form`
   width: 100%;
   max-width: 400px;
   margin-bottom: 70px;
+  
 `;
 
 export const DropzoneContainer = styled.div`
@@ -58,6 +61,8 @@ export const DropzoneContainer = styled.div`
   position: relative;
   cursor: pointer;
 `;
+
+export const UploadedImageContainer = styled.div``;
 
 export const DropzoneText = styled.p`
   color: #555555;

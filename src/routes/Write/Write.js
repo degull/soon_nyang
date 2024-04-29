@@ -5,8 +5,11 @@ import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
+import { useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
 
 const Write = () => {
+    const navigate = useNavigate(); // useNavigate 사용
+
     const [content, setContent] = useState('');
     const [uploadedImages, setUploadedImages] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
@@ -72,35 +75,45 @@ const Write = () => {
         setUploadedImages(acceptedFiles);
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', multiple: true });
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/jpeg, image/png, image/jpg', multiple: true });
 
     const handleContentChange = (event) => {
         setContent(event.target.value);
     };
 
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         try {
             const formData = new FormData();
-            formData.append('content', content);
-            formData.append('latitude', userLocation.latitude);
-            formData.append('longitude', userLocation.longitude);
-            formData.append('category', selectedCat);
-            
+            const jsonBlob = new Blob([JSON.stringify({
+                catId: selectedCat.value,
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+                content: content
+            })], { type: 'application/json' });
+            formData.append('post', jsonBlob);
+
             uploadedImages.forEach((file, index) => {
-                formData.append(`image${index}`, file);
+                if (file instanceof Blob) {
+                    formData.append(`files[${index}]`, file);
+                } else {
+                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
+                    formData.append(`files[${index}]`, imageBlob);
+                }
             });
 
-            const response = await axios.post('YOUR_ENDPOINT_HERE', formData, {
+            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
-            console.log(response.data);
+            // 등록 완료 알림
+            alert('등록이 완료되었습니다.');
+
+            // main 페이지로 이동
+            /* navigate('/'); */
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }
@@ -110,23 +123,23 @@ const Write = () => {
         <S.Wrapper>
             <Header />
             <S.CatOption>
-                    <S.CustomSelect>
-                        <Select
-                            id="categorySelect"
-                            value={selectedCat}
-                            onChange={handleCatSelect}
-                            options={catOptions.map(cat => ({
-                                value: cat.name,
-                                label: (
-                                    <div>
-                                        <S.CatImage src={cat.imageUrl} alt={cat.name} />
-                                        <span>{cat.name}</span>
-                                    </div>
-                                )
-                            }))}
-                        />
-                    </S.CustomSelect>
-                </S.CatOption>
+                <S.CustomSelect>
+                    <Select
+                        id="categorySelect"
+                        value={selectedCat}
+                        onChange={handleCatSelect}
+                        options={catOptions.map(cat => ({
+                            value: cat.catId,
+                            label: (
+                                <div>
+                                    <S.CatImage src={cat.imageUrl} alt={cat.name} />
+                                    <span>{cat.name}</span>
+                                </div>
+                            )
+                        }))}
+                    />
+                </S.CustomSelect>
+            </S.CatOption>
             <S.WriteForm onSubmit={handleSubmit}>
                 <S.DropzoneContainer {...getRootProps()}>
                     <input {...getInputProps()} />

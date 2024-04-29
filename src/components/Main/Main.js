@@ -5,37 +5,33 @@ import Menu from '../Menu/Menu';
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
-  const [bookmarkedPosts, setBookmarkedPosts] = useState([]); // 북마크 상태를 추적하는 state 추가
-  const [likedPosts, setLikedPosts] = useState([]); 
-
-  // 추후 북마크 & 좋아요 상태관리 (개수 등..) 추가
+  const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   useEffect(() => {
-    // API 호출
-    fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts')
-      .then(response => response.json())
-      .then(data => {
-        // API 응답을 받아서 posts 상태 업데이트
-        setPosts(data.content);
-      })
-      .catch(error => {
-        console.error('Error fetching posts:', error);
-      });
+    fetchPosts();
   }, []);
 
-  
-
-  // 북마크 토글 함수
-  const toggleBookmark = postId => {
-    if (bookmarkedPosts.includes(postId)) {
-      // 북마크 해제
-      setBookmarkedPosts(bookmarkedPosts.filter(id => id !== postId));
-    } else {
-      // 북마크 추가
-      setBookmarkedPosts([...bookmarkedPosts, postId]);
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts');
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+      }
+      const data = await response.json();
+      setPosts(data.content);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
     }
   };
 
+  const toggleBookmark = postId => {
+    if (bookmarkedPosts.includes(postId)) {
+      setBookmarkedPosts(bookmarkedPosts.filter(id => id !== postId));
+    } else {
+      setBookmarkedPosts([...bookmarkedPosts, postId]);
+    }
+  };
 
   const toggleLike = postId => {
     if (likedPosts.includes(postId)) {
@@ -45,27 +41,24 @@ export default function Main() {
     }
   };
 
-
   return (
     <S.Wrapper>
       <Header />
-      {/* 게시글 출력 */}
       <S.PostsContainer>
         {posts.map(post => (
           <S.Post key={post.postId}>
             <S.PostProfile>
-            <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />              
-            <S.CatName>{post.catDetailResponse.name}</S.CatName>
+              <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />              
+              <S.CatName>{post.catDetailResponse.name}</S.CatName>
               <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
             </S.PostProfile>
             <S.PostImage src={post.image} alt="Cat" />
             <S.PostFooter>
-            <S.PostLikeImg
+              <S.PostLikeImg
                 src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
                 alt="Like"
                 onClick={() => toggleLike(post.postId)}
               />             
-               {/* 북마크 토글 함수를 전달하고 북마크 상태에 따라 적절한 이미지를 렌더링 */}
               <S.PostBookmark
                 src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
                 alt="Bookmark"
