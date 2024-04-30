@@ -156,7 +156,7 @@ export const EditBtn = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-left: 10px; /* Edit 버튼과 다른 요소 간의 간격 조절 */
+  margin-left: 10px;
 `;
 
 
@@ -166,7 +166,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -63,14 +63,14 @@ export default function Main() {
         throw new Error('게시물을 삭제하는 데 실패했습니다');
       }
       alert('삭제가 완료되었습니다');
-      window.location.href = '/'; // Main 페이지로 이동
+      window.location.href = '/';
     } catch (error) {
       console.error('포스트를 삭제하는 중 오류가 발생했습니다:', error);
       alert('삭제에 실패했습니다');
     }
   };
   
-  
+  /* id 조회해 write로 이동되도록 수정필요 */
   const handleEdit = async (postId, newData) => {
     try {
       const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts/${postId}`, {
@@ -84,7 +84,7 @@ export default function Main() {
         throw new Error('게시물을 수정하는 데 실패했습니다');
       }
       alert('수정이 완료되었습니다');
-      window.location.href = '/'; // Main 페이지로 이동
+      window.location.href = '/';
     } catch (error) {
       console.error('포스트를 수정하는 중 오류가 발생했습니다:', error);
       alert('수정에 실패했습니다');

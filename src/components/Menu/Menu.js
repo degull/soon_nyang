@@ -2,12 +2,16 @@ import React from 'react';
 import * as S from './Menu.styled';
 import { Link } from 'react-router-dom';
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 const Menu = () => {
     return (
         <S.Wrapper>
             <S.MenuContainer>
-                <Link to="/"> 
+                {/* 홈 아이콘 클릭 시 맨 위로 스크롤 */}
+                <Link to="/" onClick={scrollToTop}> 
                     <S.Icon src="/img/home.png" alt="Home" />
                 </Link>
 
