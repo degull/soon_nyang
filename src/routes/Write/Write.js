@@ -6,7 +6,7 @@ import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
-const { kakao } = window;
+
 const Write = () => {
     const navigate = useNavigate(); // useNavigate 사용
 
@@ -22,8 +22,6 @@ const Write = () => {
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6024ec222ac1a9f716b05b1d1d1d5c&autoload=false';
-/*         script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d2258a550a5cc13b15f5bcf9bf34124&libraries=services,clusterer,drawing&autoload=false';
- */
 
         document.head.appendChild(script);
 
@@ -38,7 +36,6 @@ const Write = () => {
                 window.kakao.maps.event.addListener(map.current, 'click', handleMapClick);
             });
         };
-        
 
         return () => {
             if (map.current) {
@@ -71,20 +68,16 @@ const Write = () => {
             latitude: latlng.getLat(),
             longitude: latlng.getLng()
         });
-    
-        console.log('클릭한 위치의 위도:', latlng.getLat());
-        console.log('클릭한 위치의 경도:', latlng.getLng());
-    
+
         // 마커 생성
-        const markerPosition = new kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
-        const marker = new kakao.maps.Marker({
+        const markerPosition = new window.kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
+        const marker = new window.kakao.maps.Marker({
             position: markerPosition
         });
-    
+
         // 마커를 지도에 표시
         marker.setMap(map.current);
     };
-    
 
     const onDrop = useCallback(acceptedFiles => {
         setUploadedImages(acceptedFiles);
@@ -96,7 +89,7 @@ const Write = () => {
         setContent(event.target.value);
     };
 
-/*     const handleSubmit = async (event) => {
+    /*     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
@@ -206,12 +199,15 @@ const Write = () => {
     };
      */
 
+
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
         try {
             const formData = new FormData();
-    
+
             // 게시물 데이터 추가
             formData.append('post', new Blob([JSON.stringify({
                 catId: selectedCat.value,
@@ -219,13 +215,9 @@ const Write = () => {
                 longitude: userLocation.longitude,
                 content: content
             })], { type: 'application/json' }));
-    
+
             // 이미지 파일 추가
             uploadedImages.forEach((file) => {
-                // 파일의 확장자와 MIME 타입 출력
-                console.log('파일 확장자:', getFileExtension(file.name));
-                console.log('파일 MIME 타입:', file.type);
-    
                 // 이미지 파일의 MIME 타입 지정
                 const mimeType = getImageMimeType(file.name);
                 if (mimeType) {
@@ -234,27 +226,27 @@ const Write = () => {
                     console.error('올바르지 않은 파일 형식:', file.name);
                 }
             });
-    
+
             // 서버에 데이터 전송
             const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-    
+
             alert('등록이 완료되었습니다.');
-    
+
             navigate('/');
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }
     };
-    
+
     // 파일의 확장자를 반환하는 함수
     function getFileExtension(filename) {
         return filename.split('.').pop().toLowerCase();
     }
-    
+
     // 이미지 파일 확장자를 기반으로 MIME 타입을 반환하는 함수
     function getImageMimeType(filename) {
         const extension = getFileExtension(filename);
@@ -271,8 +263,7 @@ const Write = () => {
                 return ''; // 지원하지 않는 확장자인 경우 빈 문자열 반환
         }
     }
-    
-    
+
     return (
         <S.Wrapper>
             <Header />
