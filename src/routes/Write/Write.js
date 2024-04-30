@@ -5,10 +5,10 @@ import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
 
 const Write = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // useNavigate 사용
 
     const [content, setContent] = useState('');
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -17,8 +17,6 @@ const Write = () => {
     const [catOptions, setCatOptions] = useState([]);
     const mapContainer = useRef(null);
     const map = useRef(null);
-
-    const formData = new FormData();
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -83,53 +81,26 @@ const Write = () => {
         setContent(event.target.value);
     };
 
-    const handleFileUpload = async (file) => {
-        const allowedFileTypes = ['jpeg', 'jpg', 'png'];
-
-        const fileExtension = file.name.split('.').pop().toLowerCase();
-
-        if (!allowedFileTypes.includes(fileExtension)) {
-            alert('이미지 파일만 업로드 가능합니다.');
-            return;
-        }
-
-        setUploadedImages([...uploadedImages, file]);
-
-        try {
-            const fileData = await readFileAsBlob(file);
-            formData.append('files', fileData, file.name);
-        } catch (error) {
-            console.error('파일 처리 오류:', error);
-        }
-    };
-
-    const readFileAsBlob = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const blob = new Blob([reader.result], { type: file.type });
-                resolve(blob);
-            };
-            reader.onerror = reject;
-            reader.readAsArrayBuffer(file);
-        });
-    };
-
-/*      const handleSubmit = async (event) => {
+/*     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const jsonData = {
+            const formData = new FormData();
+            const jsonBlob = new Blob([JSON.stringify({
                 catId: selectedCat.value,
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude,
                 content: content
-            };
-            formData.append('post', JSON.stringify(jsonData));
+            })], { type: 'application/json' });
+            formData.append('post', jsonBlob);
 
-            // 이미지 파일들을 FormData에 추가
-            uploadedImages.forEach((file) => {
-                formData.append('files', file);
+            uploadedImages.forEach((file, index) => {
+                if (file instanceof Blob) {
+                    formData.append(`files[${index}]`, file);
+                } else {
+                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
+                    formData.append(`files[${index}]`, imageBlob);
+                }
             });
 
             const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
@@ -144,27 +115,112 @@ const Write = () => {
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }
-    };  */
-    
-    const handleSubmit = async (event) => {
+    };
+ */
+/*     const handleSubmit = async (event) => {
         event.preventDefault();
     
         try {
-            const jsonData = {
+            const formData = new FormData();
+    
+            formData.append('post', new Blob([JSON.stringify({
                 catId: selectedCat.value,
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude,
                 content: content
-            };
+            })], { type: 'application/json' }));
     
-            const formData = new FormData();
-            formData.append('post', JSON.stringify(jsonData));
-    
-            // 이미지 파일들을 FormData에 추가
-            uploadedImages.forEach((file) => {
-                formData.append('files', file);
+            uploadedImages.forEach((file, index) => {
+                if (file instanceof Blob) {
+                    formData.append(`files[${index}]`, file);
+                } else {
+                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
+                    formData.append(`files[${index}]`, imageBlob);
+                }
             });
     
+            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+    
+            alert('등록이 완료되었습니다.');
+    
+            navigate('/');
+        } catch (error) {
+            console.error('게시물 작성 오류:', error);
+        }
+    };
+     */
+
+/*     const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            const formData = new FormData();
+    
+            formData.append('post', new Blob([JSON.stringify({
+                catId: selectedCat.value,
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+                content: content
+            })], { type: 'application/json' }));
+    
+            uploadedImages.forEach((file) => {
+                if (file instanceof Blob) {
+                    formData.append('files[]', file);
+                } else {
+                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
+                    formData.append('files[]', imageBlob);
+                }
+            });
+    
+            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+    
+            alert('등록이 완료되었습니다.');
+    
+            navigate('/');
+        } catch (error) {
+            console.error('게시물 작성 오류:', error);
+        }
+    };
+     */
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            const formData = new FormData();
+    
+            // 게시물 데이터 추가
+            formData.append('post', new Blob([JSON.stringify({
+                catId: selectedCat.value,
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+                content: content
+            })], { type: 'application/json' }));
+    
+            // 이미지 파일 추가
+            uploadedImages.forEach((file) => {
+                // 파일의 확장자와 MIME 타입 출력
+                console.log('파일 확장자:', getFileExtension(file.name));
+                console.log('파일 MIME 타입:', file.type);
+    
+                // 이미지 파일의 MIME 타입 지정
+                const mimeType = getImageMimeType(file.name);
+                if (mimeType) {
+                    formData.append('files[]', new Blob([file], { type: mimeType }));
+                } else {
+                    console.error('올바르지 않은 파일 형식:', file.name);
+                }
+            });
+    
+            // 서버에 데이터 전송
             const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -177,9 +233,31 @@ const Write = () => {
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }
-    }; 
+    };
     
-
+    // 파일의 확장자를 반환하는 함수
+    function getFileExtension(filename) {
+        return filename.split('.').pop().toLowerCase();
+    }
+    
+    // 이미지 파일 확장자를 기반으로 MIME 타입을 반환하는 함수
+    function getImageMimeType(filename) {
+        const extension = getFileExtension(filename);
+        switch (extension) {
+            case 'jpg':
+            case 'jpeg':
+                return 'image/jpeg';
+            case 'png':
+                return 'image/png';
+            case 'gif':
+                return 'image/gif';
+            // 다른 이미지 확장자에 대한 처리 추가
+            default:
+                return ''; // 지원하지 않는 확장자인 경우 빈 문자열 반환
+        }
+    }
+    
+    
     return (
         <S.Wrapper>
             <Header />
