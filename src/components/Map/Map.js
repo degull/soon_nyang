@@ -109,7 +109,6 @@ const Map = () => {
             };
             document.head.appendChild(script);
         };
-
         const initializeMap = () => {
             const container = document.getElementById('map');
             if (container) {
@@ -137,6 +136,7 @@ const Map = () => {
                         content: `<div>${spot.catName}</div>`,
                     });
         
+                    // 마커 클릭 시 고양이 이름을 인포윈도우로 표시
                     window.kakao.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
                     });
@@ -145,6 +145,7 @@ const Map = () => {
                 console.error('Map container not found.');
             }
         };
+        
         
 
         loadMapScript();

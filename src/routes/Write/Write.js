@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
+import { useNavigate } from 'react-router-dom';
 
 const Write = () => {
     const navigate = useNavigate(); // useNavigate 사용
