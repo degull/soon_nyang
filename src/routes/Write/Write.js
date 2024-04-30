@@ -6,7 +6,7 @@ import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
-
+const { kakao } = window;
 const Write = () => {
     const navigate = useNavigate(); // useNavigate 사용
 
@@ -21,11 +21,15 @@ const Write = () => {
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
-        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d2258a550a5cc13b15f5bcf9bf34124&autoload=false';
+        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6024ec222ac1a9f716b05b1d1d1d5c&autoload=false';
+/*         script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d2258a550a5cc13b15f5bcf9bf34124&libraries=services,clusterer,drawing&autoload=false';
+ */
+
         document.head.appendChild(script);
 
         script.onload = () => {
             window.kakao.maps.load(() => {
+                // Kakao 맵 API 초기화 및 사용할 기능들을 설정
                 const options = {
                     center: new window.kakao.maps.LatLng(36.7713718911621, 126.934133774914),
                     level: 3
@@ -34,6 +38,7 @@ const Write = () => {
                 window.kakao.maps.event.addListener(map.current, 'click', handleMapClick);
             });
         };
+        
 
         return () => {
             if (map.current) {
@@ -66,10 +71,20 @@ const Write = () => {
             latitude: latlng.getLat(),
             longitude: latlng.getLng()
         });
-
+    
         console.log('클릭한 위치의 위도:', latlng.getLat());
         console.log('클릭한 위치의 경도:', latlng.getLng());
+    
+        // 마커 생성
+        const markerPosition = new kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
+        const marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+    
+        // 마커를 지도에 표시
+        marker.setMap(map.current);
     };
+    
 
     const onDrop = useCallback(acceptedFiles => {
         setUploadedImages(acceptedFiles);
@@ -229,7 +244,7 @@ const Write = () => {
     
             alert('등록이 완료되었습니다.');
     
-            /* navigate('/'); */
+            navigate('/');
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }

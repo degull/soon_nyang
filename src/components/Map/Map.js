@@ -94,7 +94,7 @@ const Map = () => {
         const loadMapScript = () => {
             const script = document.createElement('script');
             script.async = true;
-            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d2258a550a5cc13b15f5bcf9bf34124&autoload=false`;
+            script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6024ec222ac1a9f716b05b1d1d1d5c&autoload=false';
             script.onload = () => {
                 window.kakao.maps.load(() => {
                     if (window.kakao.maps) {

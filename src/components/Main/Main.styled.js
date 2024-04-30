@@ -121,7 +121,7 @@ export const CatName = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin-right: 310px;
+  margin-right: 270px;
 /*  display: flex;
  text-align: center;
  justify-content: center; */
