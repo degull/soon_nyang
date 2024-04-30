@@ -17,6 +17,7 @@ export const ContentContainer = styled.div`
   display: flex;
   height: 100%;
   top: -280px;
+  max-width: 550px;
 `;
 
 export const PostsContainer = styled.div`
@@ -26,9 +27,6 @@ export const PostsContainer = styled.div`
 /*   margin-top: 10px;
   margin-left: 2px; */
   margin-bottom: 70px;
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-  }
 `;
 
 export const Post = styled.div`

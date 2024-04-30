@@ -13,6 +13,7 @@ const Hospital = () => {
     <S.Wrapper>
       <Header />
       <CameraCapture onCapture={handleCapture} />
+      <h2>질병진단</h2>
       <Menu />
     </S.Wrapper>
   );

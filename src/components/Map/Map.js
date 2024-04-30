@@ -3,18 +3,16 @@ import * as S from './Map.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 
-
 const Map = () => {
-    const [isContentOpen, setIsContentOpen] = useState(false);  // dropdown
+    const [isContentOpen, setIsContentOpen] = useState(false);  // 드롭다운
     const [catSpots, setCatSpots] = useState([]);   // 고양이 위치 데이터
-    const [cats, setCats] = useState([]);   // 고양이 목록(catList)
+    const [cats, setCats] = useState([]);   // 고양이 목록
     const [isDropdownRotated, setIsDropdownRotated] = useState(false);  // 드롭다운 회전 상태
     const [selectedCatId, setSelectedCatId] = useState(null); // 선택된 고양이 ID
     const [catPosts, setCatPosts] = useState([]);   // 고양이 게시물 목록
     const catListRef = useRef(null);    // 고양이 목록 참조
 
-    const [likedPosts, setLikedPosts] = useState([]);   // 좋아요 상태관리
-    const [bookmarkedPosts, setBookmarkedPosts] = useState([]); // 지울거
+    const [likedPosts, setLikedPosts] = useState([]);   // 좋아요 상태 관리
 
     // 좋아요 토글 함수
     const toggleLike = postId => {
@@ -36,9 +34,8 @@ const Map = () => {
         try {
             setSelectedCatId(catId);
             
-            /* 마커 출력 */
             // 해당 고양이 위치 데이터 가져오기
-            const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/6/spots`);
+            const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}/spots`);
             if (!locationResponse.ok) {
                 throw new Error('Failed to load cat locations.');
             }
@@ -47,7 +44,6 @@ const Map = () => {
     
             const postIdArray = locationData.map(location => location.postId);
     
-            /* Id별 출력 */
             // 해당 고양이의 게시물 데이터 가져오기
             const postResponse = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', {
                 method: 'POST',
@@ -75,9 +71,7 @@ const Map = () => {
         }
     };
     
-    
-    
-// useEffect를 사용하여 고양이 위치 데이터 가져오기
+    // useEffect를 사용하여 고양이 위치 데이터 가져오기
     useEffect(() => {
         const fetchCatSpots = async () => {
             try {

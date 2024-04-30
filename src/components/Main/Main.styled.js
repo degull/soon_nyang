@@ -133,3 +133,53 @@ export const PostLikeImg = styled.img`
   height: 20px;
   margin: 10px;
 `;
+
+/* export const Edit = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+`;
+
+export const EditBtn = styled.img`
+  width: 20px;
+  height: 20px;
+cursor: pointer;
+`; */
+
+export const Edit = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Edit 버튼을 수직 중앙 정렬 */
+`;
+
+export const EditBtn = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 10px; /* Edit 버튼과 다른 요소 간의 간격 조절 */
+`;
+
+
+export const ModalBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalContainer = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`;
