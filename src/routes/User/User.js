@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const User = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,7 +58,9 @@ const LoginSignupButtons = () => {
       <S.LoginButton>로그인</S.LoginButton>
       <S.TextAndSignupContainer>
         <S.Text>아직 계정이 없으신가요?</S.Text>
+        <Link to="/SignUp/SignUp">
         <S.SignupButton>회원가입</S.SignupButton>
+        </Link>
       </S.TextAndSignupContainer>
     </S.LoginSignupButtonsContainer>
   );

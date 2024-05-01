@@ -9,6 +9,11 @@ import List from './routes/List/List';
 import Write from './routes/Write/Write';
 import User from './routes/User/User';
 
+import SignUp from './components/SignUp/SignUp';
+
+
+import CatDetail from './components/Catlist/CatDetail';
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -25,6 +30,14 @@ const App = () => {
         <Route path="/Write/Write" element={<Write />} />
         <Route path="/Hospital/Hospital" element={<Hospital />} />
         <Route path="/User/User" element={<User />} />
+
+
+        {/* 고양이 상세페이지 */}
+       
+        <Route path="/cats/:catId" element={<CatDetail />} />
+
+        {/* 회원가입 */}
+        <Route path='/SignUp/SignUp' element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

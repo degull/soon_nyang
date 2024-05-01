@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  
 `;
 
 export const CatList = styled.div`
@@ -16,48 +17,48 @@ export const CatList = styled.div`
   gap: 20px;
   margin-top: 100px;
   margin-bottom: 70px;
-  /* 각각의 고양이 박스들을 감싸는 스타일 */
 `;
 
 export const CatBox = styled.div`
   position: relative;
   width: 156px;
   height: 198px;
-  background-image: url('/img/catbox.png'); /* 박스 이미지 */
+  background-image: url('/img/catbox.png');
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   /* 각 고양이 박스의 스타일 */
 `;
 
 export const CatImageWrapper = styled.div`
   width: 81px;
   height: 81px;
-  border-radius: 50%; /* 원형 모양으로 만듦 */
-  overflow: hidden; /* 내부 내용을 벗어나는 부분은 숨김 */
+  border-radius: 50%;
+  overflow: hidden;
   position: absolute;
   top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 부모 요소 중앙에 배치 */
-  border: 3px solid #E86666; /* 테두리 스타일 추가 */
+  transform: translate(-50%, -50%);
+  border: 3px solid #E86666;
 `;
 
 export const CatImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 이미지 비율 유지하면서 자르기 */
+  object-fit: cover;
 `;
 
 export const CatName = styled.p`
   padding: 10px;
   text-align: center;
   position: absolute;
-  bottom: 55px; /* 아래쪽 여백을 조정하여 이름을 위로 올립니다. */
+  bottom: 55px;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.7); /* 배경색과 투명도 조절 */
-  margin: 0; /* 기본 마진 제거 */
+  background-color: rgba(255, 255, 255, 0.7);
+  margin: 0;
   color: #FFA552;
   font-size: 17px;
   font-weight: 600;

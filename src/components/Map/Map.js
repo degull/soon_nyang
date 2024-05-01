@@ -266,7 +266,9 @@ const Map = () => {
                                 </div>
                             </div>
 
-                            <S.PostImage src={post.image} alt="Cat" />
+                            {post.postImageResponses && post.postImageResponses.length > 0 && (
+       <S.PostImage src={post.postImageResponses[0].imageUrl} alt="고양이" />
+     )}
 
                             <S.PostLikesContainer>
                                 <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>

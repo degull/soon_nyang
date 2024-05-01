@@ -57,6 +57,7 @@ export const PostImage = styled.img`
 
 export const PostNickname = styled.div`
   font-size: 14px;
+  margin-right: 10px;
   font-family: 'KOTRAHOPE';
   @font-face {
     font-family: 'KOTRAHOPE';
@@ -133,18 +134,6 @@ export const PostLikeImg = styled.img`
   height: 20px;
   margin: 10px;
 `;
-
-/* export const Edit = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-`;
-
-export const EditBtn = styled.img`
-  width: 20px;
-  height: 20px;
-cursor: pointer;
-`; */
 
 export const Edit = styled.div`
   display: flex;

@@ -8,7 +8,8 @@ import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 
 const Write = () => {
-    const navigate = useNavigate(); // useNavigate 사용
+
+    const navigate = useNavigate();
 
     const [content, setContent] = useState('');
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -221,14 +222,17 @@ const Write = () => {
                 // 이미지 파일의 MIME 타입 지정
                 const mimeType = getImageMimeType(file.name);
                 if (mimeType) {
-                    formData.append('files[]', new Blob([file], { type: mimeType }));
+                    formData.append("files", file);
                 } else {
                     console.error('올바르지 않은 파일 형식:', file.name);
                 }
             });
 
             // 서버에 데이터 전송
-            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
+            const response = await axios.post(
+                'http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', 
+                formData, 
+                {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -236,7 +240,7 @@ const Write = () => {
 
             alert('등록이 완료되었습니다.');
 
-            navigate('/');
+            /* navigate('/'); */
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }
