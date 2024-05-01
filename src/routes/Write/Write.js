@@ -240,7 +240,7 @@ const Write = () => {
 
             alert('등록이 완료되었습니다.');
 
-            /* navigate('/'); */
+            navigate('/');
         } catch (error) {
             console.error('게시물 작성 오류:', error);
         }

@@ -236,7 +236,7 @@ const Map = () => {
 
                             <S.Catlist ref={catListRef}>
                                 {cats.map((cat, index) => (
-                                    <S.CatContainer key={index} onClick={() => handleCatClick(cat.id)}> {/* Handle click event */}
+                                    <S.CatContainer key={index} onClick={() => handleCatClick(cat.id)}>
                                         <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <S.CatName1>{cat.name}</S.CatName1>

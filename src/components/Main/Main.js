@@ -93,55 +93,59 @@ export default function Main() {
   
 
   return (
-    <S.Wrapper>
-      <Header />
-      <S.PostsContainer>
-      {posts.map(post => (
-   <S.Post key={post.postId}>
-     <S.PostProfile>
-       {post.catDetailResponse && post.catDetailResponse.imageUrl && (
-         <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
-       )}
-       <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
-       <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
-     </S.PostProfile>
-     {post.postImageResponses && post.postImageResponses.length > 0 && (
-       <S.PostImage src={post.postImageResponses[0].imageUrl} alt="고양이" />
-     )}
-     <S.PostFooter>
-       <S.PostLikeImg
-         src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
-         alt="좋아요"
-         onClick={() => toggleLike(post.postId)}
-       />             
-       <S.PostBookmark
-         src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
-         alt="북마크"
-         onClick={() => toggleBookmark(post.postId)}
-       />
-     </S.PostFooter>
-     <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
-     <S.Edit>
-       <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
-     </S.Edit>            
-     <S.PostContent>{post.content}</S.PostContent>
-   </S.Post>
- ))}
- 
-      </S.PostsContainer>
-      <Menu />
-      
-      {showEditOptions && (
-        <S.ModalBackdrop>
-          <S.ModalContainer>
-            <S.ModalContent>
-              <button onClick={() => handleDelete(selectedPostId)}>삭제</button>
-              <button onClick={() => handleEdit(selectedPostId)}>수정</button>
-              <button onClick={handleCloseModal}>취소</button>
-            </S.ModalContent>
-          </S.ModalContainer>
-        </S.ModalBackdrop>
-      )}
-    </S.Wrapper>
+<S.Wrapper>
+  <Header />
+  <S.PostsContainer>
+    {posts.map(post => (
+      <S.Post key={post.postId}>
+        <S.PostProfile>
+          {post.catDetailResponse && post.catDetailResponse.imageUrl && (
+            <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
+          )}
+          <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
+          <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
+        </S.PostProfile>
+        {post.postImageResponses && post.postImageResponses.length > 0 && (
+          <S.PostImagesContainer>
+            {post.postImageResponses.map((image, index) => (
+              <S.PostImage key={index} src={image.imageUrl} alt={`고양이 이미지 ${index}`} />
+            ))}
+          </S.PostImagesContainer>
+        )}
+        <S.PostFooter>
+          <S.PostLikeImg
+            src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
+            alt="좋아요"
+            onClick={() => toggleLike(post.postId)}
+          />             
+          <S.PostBookmark
+            src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
+            alt="북마크"
+            onClick={() => toggleBookmark(post.postId)}
+          />
+        </S.PostFooter>
+        <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
+        <S.Edit>
+          <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
+        </S.Edit>            
+        <S.PostContent>{post.content}</S.PostContent>
+      </S.Post>
+    ))}
+  </S.PostsContainer>
+  <Menu />
+  
+  {showEditOptions && (
+    <S.ModalBackdrop>
+      <S.ModalContainer>
+        <S.ModalContent>
+          <button onClick={() => handleDelete(selectedPostId)}>삭제</button>
+          <button onClick={() => handleEdit(selectedPostId)}>수정</button>
+          <button onClick={handleCloseModal}>취소</button>
+        </S.ModalContent>
+      </S.ModalContainer>
+    </S.ModalBackdrop>
+  )}
+</S.Wrapper>
+
   );
 }

@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 100vh;
   background: #fff;
 `;
 export const UserProfileContainer = styled.div`
@@ -16,8 +15,7 @@ export const UserProfileContainer = styled.div`
 
 export const LoginSignupButtonsContainer = styled.div`
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 75px;
+  margin: 150px;
 `;
 
 export const CatImage = styled.img`

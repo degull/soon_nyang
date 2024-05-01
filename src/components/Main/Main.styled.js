@@ -172,3 +172,6 @@ export const ModalContent = styled.div`
   justify-content: space-between;
   gap: 10px;
 `;
+
+export const PostImagesContainer = styled.div`
+`;

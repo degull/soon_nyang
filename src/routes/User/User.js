@@ -49,7 +49,7 @@ const LoginSignupButtons = () => {
       <S.CatImage src='/img/cat_01.png'/>
       <S.InputContainer>
         <S.InputLabel htmlFor="username"></S.InputLabel>
-        <S.InputField type="text" id="username" placeholder='아이디'/>
+        <S.InputField type="text" id="username" placeholder='이메일'/>
       </S.InputContainer>
       <S.InputContainer>
         <S.InputLabel htmlFor="password"></S.InputLabel>
