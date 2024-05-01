@@ -52,7 +52,7 @@ export const ErrorWrapper = styled.div`
 `;
 
 export const ListBox = styled.div`
-  width: 350px;
+  width: 520px;
   height: 100%;
   background: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

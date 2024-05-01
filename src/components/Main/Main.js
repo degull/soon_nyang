@@ -105,6 +105,8 @@ export default function Main() {
     e.dataTransfer.setData("text/plain", JSON.stringify({ postId: postId, imageIndex: imageIndex }));
   };
 
+  
+
   return (
     <S.Wrapper>
       <Header />
