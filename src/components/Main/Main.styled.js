@@ -223,3 +223,20 @@ export const Dot = styled.span`
   margin: 0 5px;
   cursor: pointer;
 `;
+export const ArrowLeft = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+`;
+
+export const ArrowRight = styled.img`
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+`;

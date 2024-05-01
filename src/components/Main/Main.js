@@ -10,7 +10,7 @@ export default function Main() {
   const [likedPosts, setLikedPosts] = useState([]);
   const [showEditOptions, setShowEditOptions] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 인덱스
+  const [currentSlides, setCurrentSlides] = useState([]);
 
   useEffect(() => {
     fetchPosts();
@@ -24,6 +24,7 @@ export default function Main() {
       }
       const data = await response.json();
       setPosts(data.content);
+      setCurrentSlides(new Array(data.content.length).fill(0));
     } catch (error) {
       console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
     }
@@ -34,22 +35,14 @@ export default function Main() {
     setShowEditOptions(true);
   };
 
-  // 슬라이드 이동 관련 함수
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
+  const goToSlide = (postIndex, index) => {
+    setCurrentSlides(prevSlides => {
+      const newSlides = [...prevSlides];
+      newSlides[postIndex] = index;
+      return newSlides;
+    });
   };
 
-  const nextSlide = () => {
-    if (posts[currentSlide].postImageResponses && currentSlide < posts[currentSlide].postImageResponses.length - 1) {
-      setCurrentSlide((prevSlide) => prevSlide + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide((prevSlide) => prevSlide - 1);
-    }
-  };
 
   const toggleBookmark = postId => {
     if (bookmarkedPosts.includes(postId)) {
@@ -116,7 +109,7 @@ export default function Main() {
     <S.Wrapper>
       <Header />
       <S.PostsContainer>
-        {posts.map((post, index) => (
+        {posts.map((post, postIndex) => (
           <S.Post key={post.postId}>
             <S.PostProfile>
               {post.catDetailResponse && post.catDetailResponse.imageUrl && (
@@ -132,7 +125,7 @@ export default function Main() {
                     key={i}
                     src={image.imageUrl}
                     alt={`이미지 ${i + 1}`}
-                    style={{ display: i === currentSlide ? 'block' : 'none' }}
+                    style={{ display: i === currentSlides[postIndex] ? 'block' : 'none' }}
                     draggable="true"
                     onDragStart={(e) => handleDragStart(e, post.postId, i)}
                   />
@@ -141,8 +134,8 @@ export default function Main() {
                   {post.postImageResponses.map((_, index) => (
                     <S.Dot
                       key={index}
-                      active={index === currentSlide}
-                      onClick={() => goToSlide(index)}
+                      active={index === currentSlides[postIndex]}
+                      onClick={() => goToSlide(postIndex, index)}
                     />
                   ))}
                 </S.SlideDots>
