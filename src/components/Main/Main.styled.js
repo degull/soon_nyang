@@ -13,18 +13,17 @@ export const PostsContainer = styled.div`
   height: 100%;
   max-width: 520px;
   display: grid;
-/*   display: block; */
-/*   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));*/  gap: 20px;
+  gap: 20px;
   margin-top: 35px;
   margin-left: 2px;
   margin-bottom: 65px;
-  @media (max-width: 768px) { /* 모바일 화면 */
+  @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 `;
 
 export const Post = styled.div`
-width: 100%;
+  width: 100%;
   transition: all 0.3s ease;
 `;
 
@@ -53,6 +52,8 @@ export const PostProfile = styled.div`
 
 export const PostImage = styled.img`
   width: 100%;
+  height: auto; /* 이미지 비율 유지 */
+  max-height: 300px; /* 최대 높이 설정 */
 `;
 
 export const PostNickname = styled.div`
@@ -123,9 +124,6 @@ export const CatName = styled.div`
     font-style: normal;
   }
   margin-right: 270px;
-/*  display: flex;
- text-align: center;
- justify-content: center; */
 `;
 
 export const PostLikeImg = styled.img`
@@ -138,7 +136,7 @@ export const PostLikeImg = styled.img`
 export const Edit = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items: center; /* Edit 버튼을 수직 중앙 정렬 */
+  align-items: center;
 `;
 
 export const EditBtn = styled.img`
@@ -147,7 +145,6 @@ export const EditBtn = styled.img`
   cursor: pointer;
   margin-left: 10px;
 `;
-
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -174,4 +171,55 @@ export const ModalContent = styled.div`
 `;
 
 export const PostImagesContainer = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+`;
+
+export const SlideButtons = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+`;
+
+export const PrevButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  outline: none;
+`;
+
+export const NextButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  outline: none;
+`;
+
+export const SlideDots = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+`;
+
+export const Dot = styled.span`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: ${({ active }) => (active ? "white" : "gray")};
+  margin: 0 5px;
+  cursor: pointer;
 `;

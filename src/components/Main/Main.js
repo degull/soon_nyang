@@ -4,13 +4,13 @@ import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 import Write from '../../routes/Write/Write';
 
-
 export default function Main() {
   const [posts, setPosts] = useState([]);
   const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const [showEditOptions, setShowEditOptions] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 인덱스
 
   useEffect(() => {
     fetchPosts();
@@ -33,9 +33,22 @@ export default function Main() {
     setSelectedPostId(postId);
     setShowEditOptions(true);
   };
-  
-  const handleCloseModal = () => {
-    setShowEditOptions(false);
+
+  // 슬라이드 이동 관련 함수
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const nextSlide = () => {
+    if (posts[currentSlide].postImageResponses && currentSlide < posts[currentSlide].postImageResponses.length - 1) {
+      setCurrentSlide((prevSlide) => prevSlide + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide((prevSlide) => prevSlide - 1);
+    }
   };
 
   const toggleBookmark = postId => {
@@ -90,62 +103,83 @@ export default function Main() {
       alert('수정에 실패했습니다');
     }
   };
-  
+
+  const handleCloseModal = () => { 
+    setShowEditOptions(false);
+  };
+
+  const handleDragStart = (e, postId, imageIndex) => {
+    e.dataTransfer.setData("text/plain", JSON.stringify({ postId: postId, imageIndex: imageIndex }));
+  };
 
   return (
-<S.Wrapper>
-  <Header />
-  <S.PostsContainer>
-    {posts.map(post => (
-      <S.Post key={post.postId}>
-        <S.PostProfile>
-          {post.catDetailResponse && post.catDetailResponse.imageUrl && (
-            <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
-          )}
-          <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
-          <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
-        </S.PostProfile>
-        {post.postImageResponses && post.postImageResponses.length > 0 && (
-          <S.PostImagesContainer>
-            {post.postImageResponses.map((image, index) => (
-              <S.PostImage key={index} src={image.imageUrl} alt={`고양이 이미지 ${index}`} />
-            ))}
-          </S.PostImagesContainer>
-        )}
-        <S.PostFooter>
-          <S.PostLikeImg
-            src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
-            alt="좋아요"
-            onClick={() => toggleLike(post.postId)}
-          />             
-          <S.PostBookmark
-            src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
-            alt="북마크"
-            onClick={() => toggleBookmark(post.postId)}
-          />
-        </S.PostFooter>
-        <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
-        <S.Edit>
-          <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
-        </S.Edit>            
-        <S.PostContent>{post.content}</S.PostContent>
-      </S.Post>
-    ))}
-  </S.PostsContainer>
-  <Menu />
-  
-  {showEditOptions && (
-    <S.ModalBackdrop>
-      <S.ModalContainer>
-        <S.ModalContent>
-          <button onClick={() => handleDelete(selectedPostId)}>삭제</button>
-          <button onClick={() => handleEdit(selectedPostId)}>수정</button>
-          <button onClick={handleCloseModal}>취소</button>
-        </S.ModalContent>
-      </S.ModalContainer>
-    </S.ModalBackdrop>
-  )}
-</S.Wrapper>
-
+    <S.Wrapper>
+      <Header />
+      <S.PostsContainer>
+        {posts.map((post, index) => (
+          <S.Post key={post.postId}>
+            <S.PostProfile>
+              {post.catDetailResponse && post.catDetailResponse.imageUrl && (
+                <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
+              )}
+              <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
+              <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
+            </S.PostProfile>
+            {post.postImageResponses && post.postImageResponses.length > 0 && (
+              <S.PostImagesContainer>
+                {post.postImageResponses.map((image, i) => (
+                  <S.PostImage
+                    key={i}
+                    src={image.imageUrl}
+                    alt={`이미지 ${i + 1}`}
+                    style={{ display: i === currentSlide ? 'block' : 'none' }}
+                    draggable="true"
+                    onDragStart={(e) => handleDragStart(e, post.postId, i)}
+                  />
+                ))}
+                <S.SlideDots>
+                  {post.postImageResponses.map((_, index) => (
+                    <S.Dot
+                      key={index}
+                      active={index === currentSlide}
+                      onClick={() => goToSlide(index)}
+                    />
+                  ))}
+                </S.SlideDots>
+              </S.PostImagesContainer>
+            )}
+            <S.PostFooter>
+              <S.PostLikeImg
+                src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
+                alt="좋아요"
+                onClick={() => toggleLike(post.postId)}
+              />             
+              <S.PostBookmark
+                src={bookmarkedPosts.includes(post.postId) ? '/img/bookmark_f.png' : '/img/bookmark_e.png'}
+                alt="북마크"
+                onClick={() => toggleBookmark(post.postId)}
+              />
+            </S.PostFooter>
+            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
+            <S.Edit>
+              <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
+            </S.Edit>            
+            <S.PostContent>{post.content}</S.PostContent>
+          </S.Post>
+        ))}
+      </S.PostsContainer>
+      <Menu />
+      {showEditOptions && (
+        <S.ModalBackdrop>
+          <S.ModalContainer>
+            <S.ModalContent>
+              <button onClick={() => handleDelete(selectedPostId)}>삭제</button>
+              <button onClick={() => handleEdit(selectedPostId)}>수정</button>
+              <button onClick={handleCloseModal}>취소</button>
+            </S.ModalContent>
+          </S.ModalContainer>
+        </S.ModalBackdrop>
+      )}
+    </S.Wrapper>
   );
 }
