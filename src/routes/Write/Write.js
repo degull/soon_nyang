@@ -6,9 +6,9 @@ import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import Map from '../../components/Map/Map'; // 추가된 부분
 
 const Write = () => {
-
     const navigate = useNavigate();
 
     const [content, setContent] = useState('');
@@ -17,13 +17,14 @@ const Write = () => {
     const [selectedCat, setSelectedCat] = useState('');
     const [catOptions, setCatOptions] = useState([]);
     const mapContainer = useRef(null);
+
+    const [selectedCatId, setSelectedCatId] = useState(null); // 선택된 고양이 ID
     const map = useRef(null);
 
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6024ec222ac1a9f716b05b1d1d1d5c&autoload=false';
-
         document.head.appendChild(script);
 
         script.onload = () => {
@@ -45,10 +46,6 @@ const Write = () => {
             document.head.removeChild(script);
         };
     }, []);
-
-    const handleCatSelect = (selectedOption) => {
-        setSelectedCat(selectedOption);
-    };
 
     useEffect(() => {
         const fetchCats = async () => {
@@ -90,119 +87,6 @@ const Write = () => {
         setContent(event.target.value);
     };
 
-    /*     const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        try {
-            const formData = new FormData();
-            const jsonBlob = new Blob([JSON.stringify({
-                catId: selectedCat.value,
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
-                content: content
-            })], { type: 'application/json' });
-            formData.append('post', jsonBlob);
-
-            uploadedImages.forEach((file, index) => {
-                if (file instanceof Blob) {
-                    formData.append(`files[${index}]`, file);
-                } else {
-                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
-                    formData.append(`files[${index}]`, imageBlob);
-                }
-            });
-
-            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            alert('등록이 완료되었습니다.');
-
-            navigate('/');
-        } catch (error) {
-            console.error('게시물 작성 오류:', error);
-        }
-    };
- */
-/*     const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        try {
-            const formData = new FormData();
-    
-            formData.append('post', new Blob([JSON.stringify({
-                catId: selectedCat.value,
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
-                content: content
-            })], { type: 'application/json' }));
-    
-            uploadedImages.forEach((file, index) => {
-                if (file instanceof Blob) {
-                    formData.append(`files[${index}]`, file);
-                } else {
-                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
-                    formData.append(`files[${index}]`, imageBlob);
-                }
-            });
-    
-            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-    
-            alert('등록이 완료되었습니다.');
-    
-            navigate('/');
-        } catch (error) {
-            console.error('게시물 작성 오류:', error);
-        }
-    };
-     */
-
-/*     const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        try {
-            const formData = new FormData();
-    
-            formData.append('post', new Blob([JSON.stringify({
-                catId: selectedCat.value,
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
-                content: content
-            })], { type: 'application/json' }));
-    
-            uploadedImages.forEach((file) => {
-                if (file instanceof Blob) {
-                    formData.append('files[]', file);
-                } else {
-                    const imageBlob = new Blob([file], { type: 'image/jpeg' });
-                    formData.append('files[]', imageBlob);
-                }
-            });
-    
-            const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-    
-            alert('등록이 완료되었습니다.');
-    
-            navigate('/');
-        } catch (error) {
-            console.error('게시물 작성 오류:', error);
-        }
-    };
-     */
-
-
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -230,13 +114,14 @@ const Write = () => {
 
             // 서버에 데이터 전송
             const response = await axios.post(
-                'http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', 
-                formData, 
+                'http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts',
+                formData,
                 {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            });
+            );
 
             alert('등록이 완료되었습니다.');
 
@@ -267,6 +152,12 @@ const Write = () => {
                 return ''; // 지원하지 않는 확장자인 경우 빈 문자열 반환
         }
     }
+
+    const handleCatSelect = (selectedOption) => {
+        setSelectedCat(selectedOption);
+        setSelectedCatId(selectedOption.value); // 고양이가 선택될 때 selectedCatId를 설정합니다.
+    };
+    
 
     return (
         <S.Wrapper>
@@ -310,6 +201,8 @@ const Write = () => {
                 <S.SubmitButton type="submit">등록</S.SubmitButton>
             </S.WriteForm>
             <Menu />
+            {/* 추가된 부분 */}
+            <Map selectedCatId={selectedCatId} userLocation={userLocation} />
         </S.Wrapper>
     );
 };

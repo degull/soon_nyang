@@ -3,48 +3,46 @@ import * as S from './Map.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 
-const Map = () => {
-    const [isContentOpen, setIsContentOpen] = useState(false);  // 드롭다운
-    const [catSpots, setCatSpots] = useState([]);   // 고양이 위치 데이터
-    const [cats, setCats] = useState([]);   // 고양이 목록
-    const [isDropdownRotated, setIsDropdownRotated] = useState(false);  // 드롭다운 회전 상태
-    const [selectedCatId, setSelectedCatId] = useState(null); // 선택된 고양이 ID
-    const [catPosts, setCatPosts] = useState([]);   // 고양이 게시물 목록
-    const catListRef = useRef(null);    // 고양이 목록 참조
+const Map = ({ userLocation }) => {
+    const [selectedCatId, setSelectedCatId] = useState(null);
+    const [isContentOpen, setIsContentOpen] = useState(false);
+    const [catSpots, setCatSpots] = useState([]);
+    const [cats, setCats] = useState([]);
+    const [isDropdownRotated, setIsDropdownRotated] = useState(false);
+    const [catPosts, setCatPosts] = useState([]);
+    const catListRef = useRef(null);
+    const [likedPosts, setLikedPosts] = useState([]);
 
-    const [likedPosts, setLikedPosts] = useState([]);   // 좋아요 상태 관리
-
-    // 좋아요 토글 함수
     const toggleLike = postId => {
         if (likedPosts.includes(postId)) {
-          setLikedPosts(likedPosts.filter(id => id !== postId));
+            setLikedPosts(likedPosts.filter(id => id !== postId));
         } else {
-          setLikedPosts([...likedPosts, postId]);
+            setLikedPosts([...likedPosts, postId]);
         }
     };
 
-    // 콘텐츠 토글 함수
     const toggleContent = () => {
         setIsContentOpen(!isContentOpen);
         setIsDropdownRotated(!isDropdownRotated);
     };
 
-    // 고양이 클릭 시 처리 함수
+    const displayCatLocation = (selectedCatId, latitude, longitude) => {
+        // selectedCatId와 userLocation을 기반으로 지도에 마커 표시하는 로직을 작성합니다.
+        console.log('Displaying cat location:', selectedCatId, latitude, longitude);
+    };
+    
+
     const handleCatClick = async (catId) => {
         try {
             setSelectedCatId(catId);
-            
-            // 해당 고양이 위치 데이터 가져오기
             const locationResponse = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}/spots`);
             if (!locationResponse.ok) {
                 throw new Error('Failed to load cat locations.');
             }
             const locationData = await locationResponse.json();
-            console.log('Cat locations:', locationData);
-    
+
             const postIdArray = locationData.map(location => location.postId);
-    
-            // 해당 고양이의 게시물 데이터 가져오기
+
             const postResponse = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts', {
                 method: 'POST',
                 headers: {
@@ -54,13 +52,12 @@ const Map = () => {
                     postIdList: postIdArray
                 })
             });
-    
+
             if (!postResponse.ok) {
                 throw new Error('Failed to load cat posts.');
             }
             const postData = await postResponse.json();
-            console.log('Cat posts:', postData);
-    
+
             if (Array.isArray(postData.content)) {
                 setCatPosts(postData.content);
             } else {
@@ -70,8 +67,7 @@ const Map = () => {
             console.error('Error loading cat data:', error);
         }
     };
-    
-    // useEffect를 사용하여 고양이 위치 데이터 가져오기
+
     useEffect(() => {
         const fetchCatSpots = async () => {
             try {
@@ -89,7 +85,6 @@ const Map = () => {
         fetchCatSpots();
     }, []);
 
-     // useEffect를 사용하여 카카오지도 API 로드하기
     useEffect(() => {
         const loadMapScript = () => {
             const script = document.createElement('script');
@@ -116,10 +111,9 @@ const Map = () => {
                     center: new window.kakao.maps.LatLng(36.7713718911650, 126.934133774920),
                     level: 3,
                 };
-        
+
                 const map = new window.kakao.maps.Map(container, options);
-        
-                // 고양이 위치 데이터를 이용하여 마커 출력
+
                 catSpots.forEach((spot) => {
                     const markerPosition = new window.kakao.maps.LatLng(spot.latitude, spot.longitude);
                     const markerImage = new window.kakao.maps.MarkerImage(
@@ -129,15 +123,14 @@ const Map = () => {
                     const marker = new window.kakao.maps.Marker({
                         map: map,
                         position: markerPosition,
-                        image: markerImage, // 마커 이미지 설정
+                        image: markerImage,
                     });
-        
+
                     const infowindow = new window.kakao.maps.InfoWindow({
                         content: `<div>${spot.catName}</div>`,
                     });
-        
-                    // 마커 클릭 시 고양이 이름을 인포윈도우로 표시
-                    window.kakao.maps.event.addListener(marker, 'click', function() {
+
+                    window.kakao.maps.event.addListener(marker, 'click', function () {
                         infowindow.open(map, marker);
                     });
                 });
@@ -145,14 +138,10 @@ const Map = () => {
                 console.error('Map container not found.');
             }
         };
-        
-        
 
         loadMapScript();
     }, [catSpots]);
 
-
-     // useEffect를 사용하여 고양이 목록 가져오기
     useEffect(() => {
         const fetchCats = async () => {
             try {
@@ -170,7 +159,6 @@ const Map = () => {
         fetchCats();
     }, []);
 
-    // useEffect를 사용하여 선택된 고양이의 게시물 가져오기
     useEffect(() => {
         const fetchCatPosts = async () => {
             if (selectedCatId !== null) {
@@ -180,7 +168,6 @@ const Map = () => {
                         throw new Error('Failed to load cat posts.');
                     }
                     const data = await response.json();
-                    console.log('Cat posts:', data);
                     if (Array.isArray(data.content)) {
                         setCatPosts(data.content);
                     } else {
@@ -195,8 +182,14 @@ const Map = () => {
         fetchCatPosts();
     }, [selectedCatId]);
 
+    useEffect(() => {
+        if (selectedCatId && userLocation) {
+            // selectedCatId와 userLocation을 기반으로 지도에 마커 표시
+            displayCatLocation(selectedCatId, userLocation.latitude, userLocation.longitude);
+        }
+    }, [selectedCatId, userLocation]);
 
-    // 고양이 목록 스크롤 좌우 이동 함수
+
     const scrollLeft = () => {
         if (catListRef.current) {
             catListRef.current.scrollBy({
@@ -218,7 +211,7 @@ const Map = () => {
     return (
         <S.Wrapper>
             <Header />
-            <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px', marginTop:'30px' }}></div>
+            <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px', marginTop: '30px' }}></div>
 
             <S.Dropdown
                 src='/img/dropdown.png'
@@ -253,7 +246,6 @@ const Map = () => {
                 </S.ContentContainer>
             )}
 
-            {/* Cat posts */}
             <S.PostsContainer>
                 {catPosts.map(post => (
                     <S.Post key={post.postId}>
@@ -267,8 +259,8 @@ const Map = () => {
                             </div>
 
                             {post.postImageResponses && post.postImageResponses.length > 0 && (
-       <S.PostImage src={post.postImageResponses[0].imageUrl} alt="고양이" />
-     )}
+                                <S.PostImage src={post.postImageResponses[0].imageUrl} alt="고양이" />
+                            )}
 
                             <S.PostLikesContainer>
                                 <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
