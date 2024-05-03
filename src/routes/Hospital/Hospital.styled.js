@@ -27,6 +27,7 @@ export const Select = styled.select`
   appearance: none;
   font-size: 16px;
   color: #333;
+  margin-top: -20px;
 `;
 
 export const CatOption = styled.div`
@@ -38,29 +39,36 @@ export const CatOption = styled.div`
 export const FileInputContainer = styled.div`
   margin-top: 20px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
+
 export const FileInput = styled.input`
-  width: 100%;
-  padding: 10px 15px;
   border-radius: 20px;
   border: 1px solid #ccc;
   background-color: #f8f8f8;
   color: #333;
+  display: flex;
+  align-items: center;
   font-size: 16px;
-  text-align: center;
   cursor: pointer;
+  
   &:hover {
     background-color: #e6e6e6;
   }
 `;
 
 export const ImagePreview = styled.img`
-  width: 100%;
+  width: 150px;
   height: auto;
-  margin-top: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 10px;
+  display: block;
+  margin: 0 auto;
 `;
 
 export const Button = styled.button`
@@ -72,21 +80,36 @@ export const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
+
 export const ErrorMessage = styled.div`
-  /* 추후 추가 */
+  color: #FF6666;
+  font-size: 14px;
+  margin-top: 10px;
 `;
 
 export const DiagnosisResult = styled.div`
-  /* 추후 추가 */
+  color: #4CAF50;
+  font-size: 16px;
+  margin-top: 10px;
 `;
 
 export const CustomSelect = styled.select`
   /* 추후 추가 */
+`;
+
+export const FileInputButton = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const Picimg = styled.img`
+  width: 250px;
+  height: auto;
+  cursor: pointer;
 `;

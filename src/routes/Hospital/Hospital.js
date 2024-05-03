@@ -43,6 +43,10 @@ const Hospital = () => {
     setSelectedCat(selectedOption);
   };
 
+  const handleImageClick = () => {
+    document.getElementById('fileInput').click(); // 이미지 클릭 시 파일 열기
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -74,7 +78,6 @@ const Hospital = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <S.Wrapper>
@@ -91,19 +94,29 @@ const Hospital = () => {
           />
         </S.CatOption>
         <S.FileInputContainer>
-          <S.FileInput type="file" accept="image/*" capture="environment" onChange={handleImageChange} />
+          <S.FileInput
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+          <S.FileInputButton onClick={handleImageClick}>
+            <S.Picimg src="/img/picture.png" alt="Attach"  />
+          </S.FileInputButton>
           {imagePreview && <S.ImagePreview src={imagePreview} alt="Preview" />}
         </S.FileInputContainer>
         <S.Button disabled={!selectedCat || !image || loading} onClick={handleDiagnoseClick}>
           {loading ? '진단 중...' : '진단하기'}
         </S.Button>
-        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>} {/*에러 메시지 표시 */}
+        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>} {/* 에러 메시지 표시 */}
         {diagnosisResult && <S.DiagnosisResult>{diagnosisResult}</S.DiagnosisResult>} {/* 진단 결과 표시 */}
       </S.HosContainer>
+      
       <Menu />
     </S.Wrapper>
   );
 };
-
 
 export default Hospital;
