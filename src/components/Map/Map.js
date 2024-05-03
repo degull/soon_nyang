@@ -26,9 +26,10 @@ const Map = ({ userLocation }) => {
         setIsDropdownRotated(!isDropdownRotated);
     };
 
-    const displayCatLocation = (selectedCatId, latitude, longitude) => {
-        // selectedCatId와 userLocation을 기반으로 지도에 마커 표시하는 로직을 작성합니다.
-        console.log('Displaying cat location:', selectedCatId, latitude, longitude);
+    const displayCatLocation = (catName, latitude, longitude) => { // 수정된 부분
+        // 고양이 이름과 위치 정보를 이용하여 마커를 클릭했을 때 정보를 표시하는 로직을 작성합니다.
+        console.log('Displaying cat location:', catName, latitude, longitude);
+        alert(`선택한 고양이: ${catName}`);
     };
     
 
@@ -131,6 +132,7 @@ const Map = ({ userLocation }) => {
                     });
 
                     window.kakao.maps.event.addListener(marker, 'click', function () {
+                        displayCatLocation(spot.catName, spot.latitude, spot.longitude); // 수정된 부분
                         infowindow.open(map, marker);
                     });
                 });

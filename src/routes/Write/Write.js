@@ -29,7 +29,6 @@ const Write = () => {
 
         script.onload = () => {
             window.kakao.maps.load(() => {
-                // Kakao 맵 API 초기화 및 사용할 기능들을 설정
                 const options = {
                     center: new window.kakao.maps.LatLng(36.7713718911621, 126.934133774914),
                     level: 3
@@ -153,6 +152,8 @@ const Write = () => {
         }
     }
 
+
+    // 요기
     const handleCatSelect = (selectedOption) => {
         setSelectedCat(selectedOption);
         setSelectedCatId(selectedOption.value); // 고양이가 선택될 때 selectedCatId를 설정합니다.
@@ -163,11 +164,12 @@ const Write = () => {
         <S.Wrapper>
             <Header />
             <S.CatOption>
-                <S.CustomSelect>
+                {/* <S.CustomSelect> */}
                     <Select
                         id="categorySelect"
                         value={selectedCat}
                         onChange={handleCatSelect}
+                        placeholder="고양이 선택"
                         options={catOptions.map(cat => ({
                             value: cat.catId,
                             label: (
@@ -178,7 +180,7 @@ const Write = () => {
                             )
                         }))}
                     />
-                </S.CustomSelect>
+                {/* </S.CustomSelect> */}
             </S.CatOption>
             <S.WriteForm onSubmit={handleSubmit}>
                 <S.DropzoneContainer {...getRootProps()}>
@@ -201,6 +203,7 @@ const Write = () => {
                 <S.SubmitButton type="submit">등록</S.SubmitButton>
             </S.WriteForm>
             <Menu />
+
             {/* 추가된 부분 */}
             <Map selectedCatId={selectedCatId} userLocation={userLocation} />
         </S.Wrapper>

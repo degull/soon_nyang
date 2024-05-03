@@ -8,8 +8,8 @@ export const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-export const CustomSelect = styled.div``;
-
+/* export const CustomSelect = styled.div``;
+ */
 export const CatOption = styled.div`
   width: 100%;
   height: 100%;
@@ -24,7 +24,6 @@ export const Select = styled.select`
     border-radius: 20px;
     width: 100%;
     height: 45px;
-    
 `;
 
 export const Option = styled.option`
