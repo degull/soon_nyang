@@ -114,12 +114,13 @@ const Hospital = () => {
         {diagnosisResult && <S.DiagnosisResult>{diagnosisResult}</S.DiagnosisResult>} {/* 진단 결과 표시 */}
       </S.HosContainer>
 
-      <Link to="/HospitalList/HospitalList">
-        <S.GoToHos src="/img/animal-hospital.png" />
-        <S.Right src="/img/right.png" />
-        <S.GoToHosText>병원정보보러가기</S.GoToHosText>
-      </Link>
-      
+      <S.RowContainer>
+          <S.GoToHosText1>병원정보를 찾으시나요?</S.GoToHosText1>
+          <Link to="/HospitalList/HospitalList">
+          <S.GoToHosText>병원정보보러가기</S.GoToHosText>
+          <S.GoToHos src="/img/animal-hospital.png" />
+        </Link>
+      </S.RowContainer>
       <Menu />
     </S.Wrapper>
   );

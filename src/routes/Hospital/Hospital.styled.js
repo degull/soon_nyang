@@ -114,25 +114,55 @@ export const Picimg = styled.img`
   cursor: pointer;
 `;
 
-export const GoToHos = styled.img`
-  width: 38px;
-  height: auto;
-  cursor: pointer;
-  margin-top: 260px;
-  margin-left: -150px;
+export const RowContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
 `;
-export const Right = styled.img`
-  width: 20px;
+
+export const GoToHos = styled.img`
+  width: 18px;
   height: auto;
   cursor: pointer;
-  margin-top: 265px;
-  margin-left: 17px;
+  font-size: 10px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  margin-left: -5px;
+  color: #FF9635;
+  font-weight: bold;
+  @font-face {
+      font-family: 'omyu_pretty';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+   }
 `;
 
 export const GoToHosText = styled.div`
-  font-size: 11px;
   color: #FFA552;
-  font-weight: bold;
-  margin-top: -22px;
-  margin-left: -60px;
+  font-size: 11px;
+  font-family: 'omyu_pretty';
+  display: inline-block; /* 이 부분 추가 */
+  margin-right: 10px; /* 이 부분 추가 */
+  @font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
+
+export const GoToHosText1 = styled.div`
+  color: #333;
+  font-size: 11px;
+  margin-right: 8px;
+  font-family: 'omyu_pretty';
+    @font-face {
+      font-family: 'omyu_pretty';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+   }
+   
 `;
