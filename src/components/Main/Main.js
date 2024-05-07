@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import * as S from './Main.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
-import Write from '../../routes/Write/Write';
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
@@ -30,19 +29,23 @@ export default function Main() {
     }
   };
 
-  const handleEditBtnClick = postId => {
-    setSelectedPostId(postId);
-    setShowEditOptions(true);
-  };
-
-  const goToSlide = (postIndex, index) => {
+  const navigateSlide = (postIndex, direction) => {
     setCurrentSlides(prevSlides => {
       const newSlides = [...prevSlides];
-      newSlides[postIndex] = index;
+      const numImages = posts[postIndex].postImageResponses.length;
+      if (direction === 'next') {
+        newSlides[postIndex] = (newSlides[postIndex] + 1) % numImages;
+      } else {
+        newSlides[postIndex] = ((newSlides[postIndex] - 1) + numImages) % numImages;
+      }
       return newSlides;
     });
   };
 
+  const handleEditBtnClick = postId => {
+    setSelectedPostId(postId);
+    setShowEditOptions(true);
+  };
 
   const toggleBookmark = postId => {
     if (bookmarkedPosts.includes(postId)) {
@@ -76,36 +79,9 @@ export default function Main() {
     }
   };
   
-  /* id 조회해 write로 이동되도록 수정필요 */
-  const handleEdit = async (postId, newData) => {
-    try {
-      const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts/${postId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newData)
-      });
-      if (!response.ok) {
-        throw new Error('게시물을 수정하는 데 실패했습니다');
-      }
-      alert('수정이 완료되었습니다');
-      window.location.href = '/';
-    } catch (error) {
-      console.error('포스트를 수정하는 중 오류가 발생했습니다:', error);
-      alert('수정에 실패했습니다');
-    }
-  };
-
-  const handleCloseModal = () => { 
+  const handleCloseModal = () => {
     setShowEditOptions(false);
   };
-
-  const handleDragStart = (e, postId, imageIndex) => {
-    e.dataTransfer.setData("text/plain", JSON.stringify({ postId: postId, imageIndex: imageIndex }));
-  };
-
-  
 
   return (
     <S.Wrapper>
@@ -128,16 +104,18 @@ export default function Main() {
                     src={image.imageUrl}
                     alt={`이미지 ${i + 1}`}
                     style={{ display: i === currentSlides[postIndex] ? 'block' : 'none' }}
-                    draggable="true"
-                    onDragStart={(e) => handleDragStart(e, post.postId, i)}
                   />
                 ))}
+                <S.SlideButtons>
+                  <S.PrevButton onClick={() => navigateSlide(postIndex, 'prev')}>{"<"}</S.PrevButton>
+                  <S.NextButton onClick={() => navigateSlide(postIndex, 'next')}>{">"}</S.NextButton>
+                </S.SlideButtons>
                 <S.SlideDots>
                   {post.postImageResponses.map((_, index) => (
                     <S.Dot
                       key={index}
                       active={index === currentSlides[postIndex]}
-                      onClick={() => goToSlide(postIndex, index)}
+                      onClick={() => navigateSlide(postIndex, index)}
                     />
                   ))}
                 </S.SlideDots>
@@ -155,7 +133,6 @@ export default function Main() {
                 onClick={() => toggleBookmark(post.postId)}
               />
             </S.PostFooter>
-            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
             <S.Edit>
               <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
             </S.Edit>            
@@ -169,7 +146,6 @@ export default function Main() {
           <S.ModalContainer>
             <S.ModalContent>
               <button onClick={() => handleDelete(selectedPostId)}>삭제</button>
-              <button onClick={() => handleEdit(selectedPostId)}>수정</button>
               <button onClick={handleCloseModal}>취소</button>
             </S.ModalContent>
           </S.ModalContainer>
