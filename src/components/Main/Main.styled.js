@@ -3,29 +3,19 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-  justify-content: space-between; */
-  min-height: 100vh;
-  background: #fff;
-
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const PostsContainer = styled.div`
   width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
   max-width: 520px;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   margin-top: 35px;
-  margin-left: 2px;
-  margin-bottom: 65px;
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-  }
+  margin-bottom: 70px;
 `;
 
 export const Post = styled.div`
@@ -38,13 +28,13 @@ export const PostProfile = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-
+  font-size: 10px;
   img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
   }
-
+ 
   span {
     font-family: 'KCC-Ganpan';
     @font-face {
@@ -60,10 +50,11 @@ export const PostImage = styled.img`
   width: 100%;
   height: auto; /* 이미지 비율 유지 */
   max-height: 300px; /* 최대 높이 설정 */
+  
 `;
 
 export const PostNickname = styled.div`
-  font-size: 14px;
+  font-size: 11px;
   margin-right: 10px;
   font-family: 'KOTRAHOPE';
   @font-face {
