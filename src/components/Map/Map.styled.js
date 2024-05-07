@@ -172,7 +172,8 @@ export const PostNickname = styled.span`
 
 export const PostImage = styled.img`
   width: 100%;
-  height: auto;
+  height: auto; /* 이미지 비율 유지 */
+  max-height: 280px; /* 최대 높이 설정 */
   margin-bottom: 10px;
 `;
 
@@ -187,6 +188,7 @@ export const PostLikeImg = styled.img`
   width: 20px;
   height: 20px;
   margin-left: 350px;
+  /* margin-top: 10px; */
 `;
 
 export const PostBookmark = styled.img`
@@ -197,6 +199,7 @@ export const PostBookmark = styled.img`
 
 export const PostLikes = styled.div`
    font-size: 13px;
+   
   font-family: 'KOTRAHOPE';
   @font-face {
     font-family: 'KOTRAHOPE';
@@ -204,7 +207,7 @@ export const PostLikes = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin: 10px;
+  margin: 20px 10px 10px 10px;
 `;
 
 export const PostContent = styled.div`
@@ -220,5 +223,55 @@ export const PostContent = styled.div`
 `;
 export const PostLikesContainer = styled.div`
     display: flex;
-    align-items: center;
+   /*  align-items: center; */
+`;
+
+export const PostImagesContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 250px; // 조정할 수 있습니다.
+  overflow: hidden;
+  margin-bottom: 10px;
+`;
+
+export const SlideButtons = styled.div`
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+`;
+
+export const PrevButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+`;
+
+export const NextButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+`;
+
+export const SlideDots = styled.div`
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+`;
+
+export const Dot = styled.span`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: ${props => props.active ? 'black' : 'grey'};
+  margin: 0 5px;
+  cursor: pointer;
 `;

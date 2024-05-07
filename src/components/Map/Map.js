@@ -12,6 +12,28 @@ const Map = ({ userLocation }) => {
     const [catPosts, setCatPosts] = useState([]);
     const catListRef = useRef(null);
     const [likedPosts, setLikedPosts] = useState([]);
+    const [currentSlides, setCurrentSlides] = useState([]);
+
+
+    useEffect(() => {
+        // 모든 포스트에 대해 현재 이미지 슬라이드 인덱스 배열을 초기화
+        if (catPosts.length > 0) {
+            setCurrentSlides(new Array(catPosts.length).fill(0));
+        }
+    }, [catPosts]);
+
+    const navigateSlide = (postIndex, direction) => {
+        setCurrentSlides(prevSlides => {
+            const newSlides = [...prevSlides];
+            const numImages = catPosts[postIndex].postImageResponses.length;
+            if (direction === 'next') {
+                newSlides[postIndex] = (newSlides[postIndex] + 1) % numImages;
+            } else {
+                newSlides[postIndex] = ((newSlides[postIndex] - 1) + numImages) % numImages;
+            }
+            return newSlides;
+        });
+    };
 
     const toggleLike = postId => {
         if (likedPosts.includes(postId)) {
@@ -215,41 +237,40 @@ const Map = ({ userLocation }) => {
             <Header />
             <div id="map" style={{ width: '100%', height: '250px', marginBottom: '290px', marginTop: '30px' }}></div>
 
-            <S.Dropdown
-                src='/img/dropdown.png'
-                onClick={toggleContent}
-                rotate={isDropdownRotated ? 'rotate(180deg)' : 'rotate(0deg)'}
-            />
+<S.Dropdown
+    src='/img/dropdown.png'
+    onClick={toggleContent}
+    rotate={isDropdownRotated ? 'rotate(180deg)' : 'rotate(0deg)'}
+/>
 
-            {isContentOpen && (
-                <S.ContentContainer>
-                    <S.PostsContainer>
-                        <S.CatlistContainer>
-                            {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
-                                <S.ArrowButton src='/img/right_arrow.png' onClick={scrollLeft} />
-                            )}
+{isContentOpen && (
+    <S.ContentContainer>
+        <S.PostsContainer>
+            <S.CatlistContainer>
+                {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
+                    <S.ArrowButton src='/img/right_arrow.png' onClick={scrollLeft} />
+                )}
 
-                            <S.Catlist ref={catListRef}>
-                                {cats.map((cat, index) => (
-                                    <S.CatContainer key={index} onClick={() => handleCatClick(cat.id)}>
-                                        <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
-                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <S.CatName1>{cat.name}</S.CatName1>
-                                        </div>
-                                    </S.CatContainer>
-                                ))}
-                            </S.Catlist>
+                <S.Catlist ref={catListRef}>
+                    {cats.map((cat, index) => (
+                        <S.CatContainer key={index} onClick={() => handleCatClick(cat.id)}>
+                            <S.CatImage src={cat.imageUrl} alt={`고양이 이미지 ${index}`} />
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <S.CatName1>{cat.name}</S.CatName1>
+                            </div>
+                        </S.CatContainer>
+                    ))}
+                </S.Catlist>
 
-                            {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
-                                <S.ArrowButton src='/img/right_arrow.png' onClick={scrollRight} />
-                            )}
-                        </S.CatlistContainer>
-                    </S.PostsContainer>
-                </S.ContentContainer>
-            )}
-
+                {cats.length > 0 && catListRef.current && catListRef.current.scrollWidth > catListRef.current.clientWidth && (
+                    <S.ArrowButton src='/img/right_arrow.png' onClick={scrollRight} />
+                )}
+            </S.CatlistContainer>
+        </S.PostsContainer>
+    </S.ContentContainer>
+)}
             <S.PostsContainer>
-                {catPosts.map(post => (
+                {catPosts.map((post, postIndex) => (
                     <S.Post key={post.postId}>
                         <div style={{ width: '450px', height: '100%', backgroundColor: '#fff', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -259,12 +280,33 @@ const Map = ({ userLocation }) => {
                                     <S.PostNickname>{post.memberDetailResponse.nickname}</S.PostNickname>
                                 </div>
                             </div>
-
                             {post.postImageResponses && post.postImageResponses.length > 0 && (
-                                <S.PostImage src={post.postImageResponses[0].imageUrl} alt="고양이" />
+                                <S.PostImagesContainer>
+                                    {post.postImageResponses.map((image, i) => (
+                                        <S.PostImage
+                                            key={i}
+                                            src={image.imageUrl}
+                                            alt={`고양이 이미지 ${i + 1}`}
+                                            style={{ display: i === currentSlides[postIndex] ? 'block' : 'none' }}
+                                        />
+                                    ))}
+                                    <S.SlideButtons>
+                                        <S.PrevButton onClick={() => navigateSlide(postIndex, 'prev')}>{"<"}</S.PrevButton>
+                                        <S.NextButton onClick={() => navigateSlide(postIndex, 'next')}>{">"}</S.NextButton>
+                                    </S.SlideButtons>
+                                    <S.SlideDots>
+                                        {post.postImageResponses.map((_, index) => (
+                                            <S.Dot
+                                                key={index}
+                                                active={index === currentSlides[postIndex]}
+                                                onClick={() => navigateSlide(postIndex, index)}
+                                            />
+                                        ))}
+                                    </S.SlideDots>
+                                </S.PostImagesContainer>
                             )}
 
-                            <S.PostLikesContainer>
+                                <S.PostLikesContainer>
                                 <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
                                 <S.PostLikeImg
                                     src={likedPosts.includes(post.postId) ? '/img/heart_f.png' : '/img/heart_e.png'}
@@ -272,13 +314,11 @@ const Map = ({ userLocation }) => {
                                     onClick={() => toggleLike(post.postId)}
                                 />
                             </S.PostLikesContainer>
-
                             <S.PostContent>{post.content}</S.PostContent>
                         </div>
                     </S.Post>
                 ))}
             </S.PostsContainer>
-
             <Menu />
         </S.Wrapper>
     );
