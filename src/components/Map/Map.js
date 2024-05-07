@@ -272,7 +272,7 @@ const Map = ({ userLocation }) => {
             <S.PostsContainer>
                 {catPosts.map((post, postIndex) => (
                     <S.Post key={post.postId}>
-                        <div style={{ width: '450px', height: '100%', backgroundColor: '#fff', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+                        <div style={{ width: '430px', height: '100%', backgroundColor: '#fff', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="User Profile" />
                                 <div>

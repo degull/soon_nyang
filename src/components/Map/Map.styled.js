@@ -16,7 +16,7 @@ export const ContentContainer = styled.div`
   position: relative;
   display: flex;
   height: 100%;
-  top: -280px;
+  top: -250px;
   max-width: 550px;
 `;
 
@@ -88,7 +88,7 @@ export const CatName1 = styled.span`
 
 
 export const CatName2 = styled.span`
-  font-size: 12px;
+  font-size: 11px;
   color: #333;
   margin-left: 13px;
   font-family: "SBAggroB";
@@ -158,7 +158,7 @@ export const ProfileImage = styled.img`
 
 
 export const PostNickname = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   font-family: 'KOTRAHOPE';
   margin-left: 250px;
   @font-face {
@@ -172,8 +172,7 @@ export const PostNickname = styled.span`
 
 export const PostImage = styled.img`
   width: 100%;
-  height: auto; /* 이미지 비율 유지 */
-  max-height: 280px; /* 최대 높이 설정 */
+  height: auto;
   margin-bottom: 10px;
 `;
 
@@ -188,7 +187,6 @@ export const PostLikeImg = styled.img`
   width: 20px;
   height: 20px;
   margin-left: 350px;
-  /* margin-top: 10px; */
 `;
 
 export const PostBookmark = styled.img`
@@ -198,8 +196,8 @@ export const PostBookmark = styled.img`
 `;
 
 export const PostLikes = styled.div`
-   font-size: 13px;
-   
+   font-size: 12px;
+   margin-left: 10px;
   font-family: 'KOTRAHOPE';
   @font-face {
     font-family: 'KOTRAHOPE';
@@ -207,7 +205,6 @@ export const PostLikes = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin: 20px 10px 10px 10px;
 `;
 
 export const PostContent = styled.div`
@@ -223,7 +220,7 @@ export const PostContent = styled.div`
 `;
 export const PostLikesContainer = styled.div`
     display: flex;
-   /*  align-items: center; */
+    align-items: center;
 `;
 
 export const PostImagesContainer = styled.div`
@@ -268,8 +265,8 @@ export const SlideDots = styled.div`
 
 export const Dot = styled.span`
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: ${props => props.active ? 'black' : 'grey'};
   margin: 0 5px;

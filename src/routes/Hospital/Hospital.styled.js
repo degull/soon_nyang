@@ -96,6 +96,8 @@ export const DiagnosisResult = styled.div`
   margin-top: 10px;
 `;
 
+
+
 export const CustomSelect = styled.select`
   /* 추후 추가 */
 `;

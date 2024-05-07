@@ -92,6 +92,11 @@ const Hospital = () => {
             getOptionLabel={(option) => option.label}
             placeholder="고양이 선택하기"
           />
+
+
+                        
+                        
+
         </S.CatOption>
         <S.FileInputContainer>
           <S.FileInput

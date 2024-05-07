@@ -6,7 +6,7 @@ import Menu from '../../components/Menu/Menu';
 import axios from 'axios';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
-import Map from '../../components/Map/Map'; // 추가된 부분
+ 
 
 const Write = () => {
     const navigate = useNavigate();
@@ -205,7 +205,7 @@ const Write = () => {
             <Menu />
 
             {/* 추가된 부분 */}
-            <Map selectedCatId={selectedCatId} userLocation={userLocation} />
+            {/* <Map selectedCatId={selectedCatId} userLocation={userLocation} /> */}
         </S.Wrapper>
     );
 };

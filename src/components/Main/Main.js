@@ -133,6 +133,7 @@ export default function Main() {
                 onClick={() => toggleBookmark(post.postId)}
               />
             </S.PostFooter>
+            <S.PostLikes>좋아요 {post.likeCount}개</S.PostLikes>
             <S.Edit>
               <S.EditBtn src='/img/etc.png' onClick={() => handleEditBtnClick(post.postId)} />
             </S.Edit>            
