@@ -113,3 +113,26 @@ export const Picimg = styled.img`
   height: auto;
   cursor: pointer;
 `;
+
+export const GoToHos = styled.img`
+  width: 38px;
+  height: auto;
+  cursor: pointer;
+  margin-top: 260px;
+  margin-left: -150px;
+`;
+export const Right = styled.img`
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+  margin-top: 265px;
+  margin-left: 17px;
+`;
+
+export const GoToHosText = styled.div`
+  font-size: 11px;
+  color: #FFA552;
+  font-weight: bold;
+  margin-top: -22px;
+  margin-left: -60px;
+`;

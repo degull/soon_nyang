@@ -3,14 +3,20 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  /* align-items: center;
+  justify-content: space-between; */
+  min-height: 100vh;
+  background: #fff;
+
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  /* min-height: 100vh; */
 `;
 
 export const PostsContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
+  display: flex;
   max-width: 520px;
   display: grid;
   gap: 20px;

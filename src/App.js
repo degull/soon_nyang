@@ -13,6 +13,8 @@ import SignUp from './components/SignUp/SignUp';
 
 
 import CatDetail from './components/Catlist/CatDetail';
+import HospitalList from './components/HospitalList/HospitalList';
+
 
 const App = () => {
   return (
@@ -31,10 +33,13 @@ const App = () => {
         <Route path="/Hospital/Hospital" element={<Hospital />} />
         <Route path="/User/User" element={<User />} />
 
+        {/* 병원정보 */}
+        <Route path="/HospitalList/HospitalList" element={<HospitalList />} />
 
         {/* 고양이 상세페이지 */}
-       
+      
         <Route path="/cats/:catId" element={<CatDetail />} />
+
 
         {/* 회원가입 */}
         <Route path='/SignUp/SignUp' element={<SignUp />} />
