@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Link 컴포넌트 추가
 import * as S from './Main.styled';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
+import CatDetail from '../Catlist/CatDetail';
+import { useNavigate } from 'react-router-dom'; // 추가: react-router-dom의 useNavigate 훅을 사용
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
@@ -10,6 +13,7 @@ export default function Main() {
   const [showEditOptions, setShowEditOptions] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [currentSlides, setCurrentSlides] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts();
@@ -22,12 +26,21 @@ export default function Main() {
         throw new Error('게시물을 불러오는 데 실패했습니다');
       }
       const data = await response.json();
+      // 게시물을 불러온 후에 고양이의 catId 정보를 이용하여 상세 페이지로 이동할 수 있도록 설정
       setPosts(data.content);
       setCurrentSlides(new Array(data.content.length).fill(0));
     } catch (error) {
       console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
     }
   };
+  
+  // PostProfile 클릭 시 해당 고양이의 상세 페이지로 이동하는 함수
+  const handleCatProfileClick = (catId) => {
+    if (catId) {
+      navigate(`/cats/${catId}`);
+    }
+  };
+  
 
   const navigateSlide = (postIndex, direction) => {
     setCurrentSlides(prevSlides => {
@@ -87,15 +100,16 @@ export default function Main() {
     <S.Wrapper>
       <Header />
       <S.PostsContainer>
-        {posts.map((post, postIndex) => (
-          <S.Post key={post.postId}>
-            <S.PostProfile>
-              {post.catDetailResponse && post.catDetailResponse.imageUrl && (
-                <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
-              )}
-              <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
-              <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
-            </S.PostProfile>
+      {posts.map((post, postIndex) => (
+  <S.Post key={post.postId}>
+    <Link to={`/cats/${post.catDetailResponse.id}`}> {/* 고양이 상세페이지 링크 */}
+      <S.PostProfile onClick={() => handleCatProfileClick(post.catDetailResponse.id)}> {/* 클릭 시 상세 페이지로 이동 */}
+        {post.catDetailResponse && post.catDetailResponse.imageUrl && (
+          <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
+        )}
+        <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
+      </S.PostProfile>
+    </Link>
             {post.postImageResponses && post.postImageResponses.length > 0 && (
               <S.PostImagesContainer>
                 {post.postImageResponses.map((image, i) => (

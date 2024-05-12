@@ -1,5 +1,3 @@
-// List.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // 추가: react-router-dom의 useNavigate 훅을 사용
 import * as S from './List.styled';

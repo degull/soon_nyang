@@ -93,7 +93,6 @@ const Hospital = () => {
             placeholder="고양이 선택하기"
           />
 
-
                         
                         
 

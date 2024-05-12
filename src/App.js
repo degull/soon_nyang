@@ -15,6 +15,7 @@ import SignUp from './components/SignUp/SignUp';
 import CatDetail from './components/Catlist/CatDetail';
 import HospitalList from './components/HospitalList/HospitalList';
 
+import UserSet from './components/UserSet/UserSet';
 
 const App = () => {
   return (
@@ -43,6 +44,11 @@ const App = () => {
 
         {/* 회원가입 */}
         <Route path='/SignUp/SignUp' element={<SignUp />} />
+
+
+        {/* 마이페이지 세팅 */}
+        <Route path='/UserSet/UserSet' element={<UserSet />} />
+
       </Routes>
     </BrowserRouter>
   );
