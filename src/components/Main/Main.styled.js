@@ -109,10 +109,12 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   box-shadow: 0 0 0 2px #FFD700;
   margin: 10px;
+  cursor: pointer;
 `;
 
 export const CatName = styled.div`
   font-family: "SBAggroB";
+  cursor: pointer;
   @font-face {
     font-family: "SBAggroB";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
@@ -120,7 +122,7 @@ export const CatName = styled.div`
     font-weight: normal;
     font-style: normal;
   }
-  margin-right: 270px;
+  margin-right: 320px;
 `;
 
 export const PostLikeImg = styled.img`

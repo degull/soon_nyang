@@ -23,11 +23,13 @@ export const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  font-family: 'JalnanGothic';
+  font-size: 25px;
+  font-weight: bold;
+  font-family: 'Cute_siu';
+  
   @font-face {
-    font-family: 'JalnanGothic';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-family: 'Cute_siu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -42,8 +44,17 @@ export const IdContainer = styled.div`
 `;
 
 export const ID = styled.div`
-  font-size: 11px;
+  font-size: 15px;
+  font-weight: bold;
   margin: 0 0 10px 25px;
+  font-family: 'Cute_siu';
+  
+  @font-face {
+    font-family: 'Cute_siu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 `;
 export const IDStyle = styled.input`
    margin: 0 0 10px 20px;
@@ -69,8 +80,17 @@ export const PWContainer = styled.div`
 `;
 
 export const PW = styled.div`
-  font-size: 11px;
+  font-size: 15px;
+  font-weight: bold;
   margin: 0 0 10px 20px;
+  font-family: 'Cute_siu';
+  
+  @font-face {
+    font-family: 'Cute_siu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 `;
 
 export const PWStyle = styled.input`
@@ -113,8 +133,17 @@ export const PWConfirmationContainer = styled.div`
 `;
 
 export const PWConfirmation = styled.div`
-  font-size: 11px;
+  font-size: 15px;
+  font-weight: bold;
   margin: 0 0 10px 0px;
+  font-family: 'Cute_siu';
+  
+  @font-face {
+    font-family: 'Cute_siu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 `;
 
 export const PWConfirmationStyle = styled.input`

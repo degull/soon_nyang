@@ -34,13 +34,16 @@ const UserSet = () => {
                     onChange={handleImageChange} 
                     ref={fileInputRef} 
                 />
-                <S.Form>
+                <S.Form1>
                     <S.Nickname>집사 이름</S.Nickname>
-                    <S.Input type="text" placeholder="닉네임" />
-                    <S.UserIntro>간단한 소개</S.UserIntro>
-                    <S.Input type="text" placeholder="소개" />
-                </S.Form>
+                    <S.Input type="text" id="nickname" placeholder="닉네임" />
+                </S.Form1>
 
+                <S.Form2>
+                    <S.UserIntro>간단한 소개</S.UserIntro>
+                    <S.Input type="text" id='introduction' placeholder="소개" />
+                
+                    </S.Form2>
                 <S.Button>저장하기</S.Button>
             </S.UserContainer>
             <Menu />

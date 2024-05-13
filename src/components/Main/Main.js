@@ -16,29 +16,25 @@ export default function Main() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts');
+        if (!response.ok) {
+          throw new Error('게시물을 불러오는 데 실패했습니다');
+        }
+        const data = await response.json();
+        setPosts(data.content);
+        setCurrentSlides(new Array(data.content.length).fill(0));
+      } catch (error) {
+        console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
+      }
+    };
+
     fetchPosts();
   }, []);
-
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts');
-      if (!response.ok) {
-        throw new Error('게시물을 불러오는 데 실패했습니다');
-      }
-      const data = await response.json();
-      // 게시물을 불러온 후에 고양이의 catId 정보를 이용하여 상세 페이지로 이동할 수 있도록 설정
-      setPosts(data.content);
-      setCurrentSlides(new Array(data.content.length).fill(0));
-    } catch (error) {
-      console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
-    }
-  };
   
-  // PostProfile 클릭 시 해당 고양이의 상세 페이지로 이동하는 함수
   const handleCatProfileClick = (catId) => {
-    if (catId) {
-      navigate(`/cats/${catId}`);
-    }
+    navigate(`/cats/${catId}`); // Navigate to cat's detail page
   };
   
 
@@ -96,20 +92,20 @@ export default function Main() {
     setShowEditOptions(false);
   };
 
+
   return (
     <S.Wrapper>
       <Header />
       <S.PostsContainer>
       {posts.map((post, postIndex) => (
-  <S.Post key={post.postId}>
-    <Link to={`/cats/${post.catDetailResponse.id}`}> {/* 고양이 상세페이지 링크 */}
-      <S.PostProfile onClick={() => handleCatProfileClick(post.catDetailResponse.id)}> {/* 클릭 시 상세 페이지로 이동 */}
-        {post.catDetailResponse && post.catDetailResponse.imageUrl && (
-          <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="프로필 이미지" />
-        )}
-        <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
-      </S.PostProfile>
-    </Link>
+          <S.Post key={post.postId}>
+            <S.PostProfile onClick={() => handleCatProfileClick(post.catDetailResponse.catId)}>
+              {post.catDetailResponse && post.catDetailResponse.imageUrl && (
+                <S.ProfileImage src={post.catDetailResponse.imageUrl} alt="Profile Image" />
+              )}
+          <S.CatName>{post.catDetailResponse && post.catDetailResponse.name}</S.CatName>
+          <S.PostNickname>{post.memberDetailResponse && post.memberDetailResponse.nickname}</S.PostNickname>
+        </S.PostProfile>
             {post.postImageResponses && post.postImageResponses.length > 0 && (
               <S.PostImagesContainer>
                 {post.postImageResponses.map((image, i) => (

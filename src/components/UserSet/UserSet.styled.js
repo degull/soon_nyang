@@ -43,7 +43,14 @@ export const UserImg = styled.img`
 `;
 
 
-export const Form = styled.form`
+export const Form1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
+`;
+export const Form2 = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -53,7 +60,9 @@ export const Form = styled.form`
 export const Nickname = styled.label`
   font-size: 17px;
   font-weight: bold;
+  margin-left: 50px;
   font-family: 'Cute_siu';
+  
   @font-face {
     font-family: 'Cute_siu';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
@@ -61,11 +70,17 @@ export const Nickname = styled.label`
     font-style: normal;
 }
 
+::placeholder {
+     color: #999;
+     font-size: 10px;
+   }
+
 `;
 
 export const UserIntro = styled.label`
   font-size: 17px;
   font-weight: bold;
+  margin-left: 50px;
   font-family: 'Cute_siu';
   @font-face {
     font-family: 'Cute_siu';
@@ -79,6 +94,11 @@ export const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 `;
 
 export const ImagePreview = styled.img`
@@ -90,7 +110,7 @@ export const ImagePreview = styled.img`
 
 
 export const Button = styled.button`
-  width: 440px;
+  width: 370px;
   height: 32px;
   border: 0;
   background: #FFA552;
