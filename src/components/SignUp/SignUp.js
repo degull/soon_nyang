@@ -1,5 +1,3 @@
-// SignUp.js
-
 import React, { useState } from 'react';
 import * as S from './SignUp.styled';
 import Header from '../Header/Header';
@@ -40,6 +38,7 @@ const SignUp = () => {
       });
 
       if (response.ok) {
+        alert('가입을 환영합니다!');
         navigate('/UserSet/UserSet');
       } else {
         const data = await response.json();
