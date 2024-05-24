@@ -2,64 +2,92 @@ import React, { useState } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const User = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { userId } = useParams(); // 사용자 ID를 URL에서 가져옴 (루트 파라미터로 가정)
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // 로그인 로직을 구현
-    setIsLoggedIn(true);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/auth/login', { email: username, password });
+      if (response.data.success) {
+        setIsLoggedIn(true);
+        localStorage.setItem('token', response.data.token);
+        navigate('/UserSet/UserSet');
+      } else {
+        alert('로그인 실패: ' + response.data.msg);
+      }
+    } catch (error) {
+      console.error('로그인 중 오류 발생:', error);
+      alert('로그인 중 오류가 발생했습니다.');
+    }
   };
 
   const handleLogout = () => {
-    // 로그아웃 로직을 구현
     setIsLoggedIn(false);
+    localStorage.removeItem('token');
   };
 
   return (
     <S.Wrapper>
       <Header />
       {isLoggedIn ? (
-        // 사용자가 로그인한 경우, 사용자 프로필 표시
-        <UserProfile userId={userId} />
+        <UserProfile />
       ) : (
-        // 사용자가 로그인하지 않은 경우, 로그인/회원가입 버튼 표시
-        <LoginSignupButtons />
+        <LoginSignupButtons 
+          username={username} 
+          setUsername={setUsername} 
+          password={password} 
+          setPassword={setPassword} 
+          handleLogin={handleLogin} 
+        />
       )}
-            <Menu isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
-
+      <Menu isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
     </S.Wrapper>
   );
 };
 
-const UserProfile = ({ userId }) => {
+const UserProfile = () => {
   return (
     <div>
-      <h2>사용자 프로필 페이지 - 사용자 ID: {userId}</h2>
-      {/* 다른 프로필 관련 컴포넌트 추가 */}
+      <h2>사용자 프로필 페이지</h2>
     </div>
   );
 };
 
-const LoginSignupButtons = () => {
+const LoginSignupButtons = ({ username, setUsername, password, setPassword, handleLogin }) => {
   return (
     <S.LoginSignupButtonsContainer>
       <S.CatImage src='/img/cat_01.png'/>
       <S.InputContainer>
         <S.InputLabel htmlFor="username"></S.InputLabel>
-        <S.InputField type="text" id="username" placeholder='이메일'/>
+        <S.InputField 
+          type="text" 
+          id="username" 
+          placeholder='이메일' 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
       </S.InputContainer>
       <S.InputContainer>
         <S.InputLabel htmlFor="password"></S.InputLabel>
-        <S.InputField type="password" id="password" placeholder='비밀번호' />
+        <S.InputField 
+          type="password" 
+          id="password" 
+          placeholder='비밀번호' 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </S.InputContainer>
-      <S.LoginButton>로그인</S.LoginButton>
+      <S.LoginButton onClick={handleLogin}>로그인</S.LoginButton>
       <S.TextAndSignupContainer>
         <S.Text>아직 계정이 없으신가요?</S.Text>
         <Link to="/SignUp/SignUp">
-        <S.SignupButton>회원가입</S.SignupButton>
+          <S.SignupButton>회원가입</S.SignupButton>
         </Link>
       </S.TextAndSignupContainer>
     </S.LoginSignupButtonsContainer>
