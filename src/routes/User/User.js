@@ -1,9 +1,10 @@
+// User.js
+
 import React, { useState } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const User = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,19 +12,37 @@ const User = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const [userRole, setUserRole] = useState('');
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/auth/login', { email: username, password });
-      if (response.data.success) {
+      const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: username, password }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        setUserRole(data.role);
         setIsLoggedIn(true);
-        localStorage.setItem('token', response.data.token);
         navigate('/UserSet/UserSet');
       } else {
-        alert('로그인 실패: ' + response.data.msg);
+        alert('로그인 실패: ' + data.msg);
       }
     } catch (error) {
       console.error('로그인 중 오류 발생:', error);
       alert('로그인 중 오류가 발생했습니다.');
+    }
+  };
+
+  const checkUserRole = () => {
+    if (userRole === 'ROLE_USER') {
+      return true;
+    } else {
+      return false;
     }
   };
 

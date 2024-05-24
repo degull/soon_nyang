@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 import * as S from './UserSet.styled';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const UserSet = () => {
@@ -30,14 +29,25 @@ const UserSet = () => {
     const handleSave = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.put('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/members', 
-                { nickname, introduction },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            if (response.data.msg) {
-                alert(response.data.msg);
-                // 정보 저장 후 마이페이지로 이동
+            const formData = new FormData();
+            formData.append('nickname', nickname);
+            formData.append('introduction', introduction);
+            formData.append('image', fileInputRef.current.files[0]);
+
+            const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/members', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert('정보가 성공적으로 업데이트되었습니다.');
                 navigate('/MyPage', { state: { nickname, introduction } });
+            } else {
+                const data = await response.json();
+                alert('정보 업데이트 실패: ' + data.message);
             }
         } catch (error) {
             console.error('정보 수정 중 오류 발생:', error);
