@@ -13,7 +13,6 @@ const Hospital = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false); // 추가: 데이터 로딩 상태
-  const [diagnosisResult, setDiagnosisResult] = useState(null); // 추가: 진단 결과
   const [errorMessage, setErrorMessage] = useState(''); // 추가: 에러 메시지
 
   useEffect(() => {
@@ -59,18 +58,22 @@ const Hospital = () => {
     }
   };
 
+  const getRandomDiagnosis = () => {
+    const diagnoses = ['각막염', '눈병'];
+    return diagnoses[Math.floor(Math.random() * diagnoses.length)];
+  };
+
   const handleDiagnoseClick = async () => {
     setLoading(true);
-    setDiagnosisResult(null);
     setErrorMessage('');
   
     try {
       console.log('Selected Cat:', selectedCat);
       console.log('Image Data:', image);
-      
-      // API 추가
-      // const response = await axios.post('/diagnose', { selectedCat, image });
-      // setDiagnosisResult(response.data.result);
+
+      // Random diagnosis popup
+      const diagnosis = getRandomDiagnosis();
+      alert(`진단 결과: ${diagnosis}`);
     } catch (error) {
       console.error('Failed to diagnose:', error);
       setErrorMessage('진단하는 동안 오류가 발생했습니다.');
@@ -92,10 +95,6 @@ const Hospital = () => {
             getOptionLabel={(option) => option.label}
             placeholder="고양이 선택하기"
           />
-
-                        
-                        
-
         </S.CatOption>
         <S.FileInputContainer>
           <S.FileInput
@@ -107,7 +106,7 @@ const Hospital = () => {
             style={{ display: 'none' }}
           />
           <S.FileInputButton onClick={handleImageClick}>
-            <S.Picimg src="/img/picture.png" alt="Attach"  />
+            <S.Picimg src="/img/picture.png" alt="Attach" />
           </S.FileInputButton>
           {imagePreview && <S.ImagePreview src={imagePreview} alt="Preview" />}
         </S.FileInputContainer>
@@ -115,12 +114,11 @@ const Hospital = () => {
           {loading ? '진단 중...' : '진단하기'}
         </S.Button>
         {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>} {/* 에러 메시지 표시 */}
-        {diagnosisResult && <S.DiagnosisResult>{diagnosisResult}</S.DiagnosisResult>} {/* 진단 결과 표시 */}
       </S.HosContainer>
 
       <S.RowContainer>
-          <S.GoToHosText1>병원정보를 찾으시나요?</S.GoToHosText1>
-          <Link to="/HospitalList/HospitalList">
+        <S.GoToHosText1>병원정보를 찾으시나요?</S.GoToHosText1>
+        <Link to="/HospitalList/HospitalList">
           <S.GoToHosText>병원정보보러가기</S.GoToHosText>
           <S.GoToHos src="/img/animal-hospital.png" />
         </Link>
