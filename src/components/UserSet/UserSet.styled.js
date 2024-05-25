@@ -124,3 +124,9 @@ export const Button = styled.button`
   margin: 0 auto;
   margin-top: 20px;
 `;
+
+export const Error = styled.p`
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+`;

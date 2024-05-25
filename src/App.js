@@ -15,24 +15,24 @@ import UserSet from './components/UserSet/UserSet';
 import Mypage from './components/Mypage/Mypage';
 
 const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/Map/Map" element={<Map />} />
-        <Route path="/Food/Food" element={<Food />} />
-        <Route path="/List/List" element={<List />} />
-        <Route path="/Write/Write" element={<Write />} />
-        <Route path="/Hospital/Hospital" element={<Hospital />} />
-        <Route path="/User/User" element={<User />} />
-        <Route path="/HospitalList/HospitalList" element={<HospitalList />} />
-        <Route path="/cats/:catId" element={<CatDetail />} />
-        <Route path='/SignUp/SignUp' element={<SignUp />} />
-        <Route path='/UserSet/UserSet' element={<UserSet />} />
-        <Route path='/Mypage' element={<Mypage />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/Map/Map" element={<Map />} />
+                <Route path="/Food/Food" element={<Food />} />
+                <Route path="/List/List" element={<List />} />
+                <Route path="/Write/Write" element={<Write />} />
+                <Route path="/Hospital/Hospital" element={<Hospital />} />
+                <Route path="/User/User" element={<User />} />
+                <Route path="/HospitalList/HospitalList" element={<HospitalList />} />
+                <Route path="/cats/:catId" element={<CatDetail />} />
+                <Route path='/SignUp/SignUp' element={<SignUp />} />
+                <Route path='/UserSet/UserSet' element={<UserSet />} />
+                <Route path='/Mypage' element={<Mypage />} />
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;

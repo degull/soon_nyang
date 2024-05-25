@@ -18,7 +18,7 @@ export default function Main() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts');
+        const response = await fetch('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/posts');
         if (!response.ok) {
           throw new Error('게시물을 불러오는 데 실패했습니다');
         }

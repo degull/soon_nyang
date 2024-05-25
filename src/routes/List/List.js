@@ -12,7 +12,7 @@ const List = () => {
         // 고양이 목록을 불러오는 함수
         const fetchCats = async () => {
             try {
-                const response = await fetch('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
+                const response = await fetch('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/cats');
                 if (!response.ok) {
                     throw new Error('Failed to fetch cats');
                 }
