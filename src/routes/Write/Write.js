@@ -49,7 +49,17 @@ const Write = () => {
     useEffect(() => {
         const fetchCats = async () => {
             try {
-                const response = await axios.get('http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats');
+                const token = localStorage.getItem('token');
+                if(!token){
+                    navigate('/');
+                    return;
+                }
+                const response = await axios.get('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/cats',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // JWT 토큰을 포함한 Authorization 헤더
+                        'Content-Type': 'application/json'
+                    },
+                });
                 setCatOptions(response.data);
             } catch (error) {
                 console.error('고양이 정보를 불러오는 동안 오류가 발생했습니다:', error);
@@ -87,9 +97,17 @@ const Write = () => {
     };
 
     const handleSubmit = async (event) => {
+
         event.preventDefault();
 
         try {
+            const token = localStorage.getItem('token');
+            console.log('token:', token); // 토큰 확인용 로그
+            if (!token) {
+                alert('로그인이 필요합니다.');
+                navigate('/');
+                return;
+            }
             const formData = new FormData();
 
             // 게시물 데이터 추가
@@ -113,11 +131,14 @@ const Write = () => {
 
             // 서버에 데이터 전송
             const response = await axios.post(
-                'http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/posts',
+                'http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/posts',
+                
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`, // JWT 토큰을 포함한 Authorization 헤더
+                        
                     }
                 }
             );

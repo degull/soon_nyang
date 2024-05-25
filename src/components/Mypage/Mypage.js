@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './Mypage.styled';
@@ -11,11 +10,12 @@ const Mypage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            navigate('/'); // 토큰이 없으면 로그인 페이지로 이동
-            return;
-        }
+      const token = localStorage.getItem('token');
+      console.log('토큰:', token); // 토큰을 콘솔에 출력
+      if (!token) {
+          navigate('/'); // 토큰이 없으면 로그인 페이지로 이동
+          return;
+      }
 
         const fetchUserData = async () => {
             try {
@@ -56,4 +56,3 @@ const Mypage = () => {
 };
 
 export default Mypage;
-

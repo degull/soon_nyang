@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import * as S from './CatDetail.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
+import { useNavigate } from 'react-router-dom';
 
 const CatDetail = () => {
     const { catId } = useParams(); // URL에서 catId를 추출
@@ -11,9 +12,22 @@ const CatDetail = () => {
     const [catSpots, setCatSpots] = useState([]); // 고양이 위치 데이터
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token){
+            Navigate('/');
+            return;
+        }
+
         const fetchCatDetails = async () => {
             try {
-                const response = await fetch(`http://soonnyang.ap-northeast-2.elasticbeanstalk.com/v1/cats/${catId}`);
+                const response = await fetch(`http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/cats/${catId}`,{
+                    headers : {
+                        'Authorization': `Bearer ${token}`, // JWT 토큰을 포함한 Authorization 헤더
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+            
                 if (!response.ok) {
                     throw new Error('Failed to fetch cat details');
                 }

@@ -18,7 +18,18 @@ export default function Main() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/posts');
+        const token = localStorage.getItem('token');
+        if(!token){
+          navigate('/');
+          return;
+        }
+
+        const response = await fetch('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/posts',{
+          headers: {
+            'Authorization': `Bearer ${token}`, // JWT 토큰을 포함한 Authorization 헤더
+            'Content-Type': 'application/json'
+        },
+        });
         if (!response.ok) {
           throw new Error('게시물을 불러오는 데 실패했습니다');
         }

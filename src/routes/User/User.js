@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
@@ -75,10 +75,10 @@ const User = () => {
 };
 
 export default User; 
-
+ */
 
 //로그인 유지
-/* 
+
 import React, { useState, useEffect } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
@@ -164,4 +164,3 @@ const User = () => {
 };
 
 export default User;
- */
