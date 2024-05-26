@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <S.Wrapper>
             <S.HeaderContainer>
-            <Link to="/">
+            <Link to="/Main/Main">
             <S.Title>순냥이 길들이기</S.Title>
             </Link>
             
