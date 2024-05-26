@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/* import React, { useState, useEffect } from 'react';
 import * as S from './Hospital.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
@@ -116,7 +116,7 @@ const Hospital = () => {
         <S.Button disabled={!selectedCat || !image || loading} onClick={handleDiagnoseClick}>
           {loading ? '진단 중...' : '진단하기'}
         </S.Button>
-        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>} {/* 에러 메시지 표시 */}
+        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.HosContainer>
 
       <S.RowContainer>
@@ -131,10 +131,10 @@ const Hospital = () => {
   );
 };
 
-export default Hospital;
+export default Hospital; */
 
-
-/* import React, { useState, useEffect } from 'react';
+/* 
+import React, { useState, useEffect } from 'react';
 import * as S from './Hospital.styled';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Menu/Menu';
@@ -277,3 +277,146 @@ const Hospital = () => {
 };
 
 export default Hospital; */
+
+import React, { useState, useEffect } from 'react';
+import * as S from './Hospital.styled';
+import Header from '../../components/Header/Header';
+import Menu from '../../components/Menu/Menu';
+import axios from 'axios';
+import Select from 'react-select';
+import { Link, useNavigate } from 'react-router-dom';
+
+const Hospital = () => {
+  const navigate = useNavigate();
+  const [selectedCat, setSelectedCat] = useState(null);
+  const [catOptions, setCatOptions] = useState([]);
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const fetchCats = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/'); 
+          return;
+        }
+
+        const response = await axios.get('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/cats', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const formattedCats = response.data.map(cat => ({
+          value: cat.catId,
+          label: (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={cat.imageUrl} alt={cat.name} style={{ marginRight: '10px', width: '30px', height: '30px' }} />
+              {cat.name}
+            </div>
+          )
+        }));
+        setCatOptions(formattedCats);
+      } catch (error) {
+        console.error('Failed to load cat data:', error);
+        setErrorMessage('고양이 데이터를 불러오는 데 실패했습니다.');
+      }
+    };
+
+    fetchCats();
+  }, [navigate]);
+
+  const handleCatSelect = (selectedOption) => {
+    setSelectedCat(selectedOption);
+  };
+
+  const handleImageClick = () => {
+    document.getElementById('fileInput').click();
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const getRandomDiagnosis = () => {
+    const diagnoses = ['안검염', '비궤양성각막염', '결막염', '각막부골편', '각막궤양'];
+    return diagnoses[Math.floor(Math.random() * diagnoses.length)];
+  };
+
+  const handleDiagnoseClick = async () => {
+    setLoading(true);
+    setErrorMessage('');
+
+    try {
+      console.log('Selected Cat:', selectedCat);
+      console.log('Image Data:', image);
+
+      const diagnosis = getRandomDiagnosis();
+      alert(`진단 결과: ${diagnosis}`);
+    } catch (error) {
+      console.error('Failed to diagnose:', error);
+      setErrorMessage('진단하는 동안 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <S.Wrapper>
+      <Header />
+      <S.HosContainer>
+        <S.CatOption>
+          <Select
+            id="catSelect"
+            value={selectedCat}
+            onChange={handleCatSelect}
+            options={catOptions}
+            getOptionLabel={(option) => option.label}
+            placeholder="고양이 선택하기"
+          />
+        </S.CatOption>
+        <S.FileInputContainer>
+          <S.FileInput
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+          <S.FileInputButton onClick={handleImageClick}>
+            <S.Picimg src="/img/picture.png" alt="Attach" />
+          </S.FileInputButton>
+          {imagePreview && <S.ImagePreview src={imagePreview} alt="Preview" />}
+        </S.FileInputContainer>
+        <S.Button disabled={!selectedCat || !image || loading} onClick={handleDiagnoseClick}>
+          {loading ? '진단 중...' : '진단하기'}
+        </S.Button>
+        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+      </S.HosContainer>
+
+      <S.RowContainer>
+        <S.GoToHosText1>병원정보를 찾으시나요?</S.GoToHosText1>
+        <Link to="/HospitalList/HospitalList">
+          <S.GoToHosText>병원정보보러가기</S.GoToHosText>
+          <S.GoToHos src="/img/animal-hospital.png" />
+        </Link>
+      </S.RowContainer>
+      <Menu />
+    </S.Wrapper>
+  );
+};
+
+export default Hospital;

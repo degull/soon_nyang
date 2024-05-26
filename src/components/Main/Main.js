@@ -45,7 +45,7 @@ export default function Main() {
   }, []);
   
   const handleCatProfileClick = (catId) => {
-    navigate(`/cats/${catId}`); // Navigate to cat's detail page
+    navigate(`/cats/${catId}`);
   };
   
 
