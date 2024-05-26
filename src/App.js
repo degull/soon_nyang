@@ -253,7 +253,7 @@ const App = () => {
 export default App;
  */
 
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Main from './components/Main/Main';
 import Map from './components/Map/Map';
@@ -297,9 +297,67 @@ const App = () => {
                     <Route path="/Hospital/*" element={<ProtectedRoute component={Hospital} isLoggedIn={isLoggedIn} />} />
                     <Route path="/HospitalList/*" element={<ProtectedRoute component={HospitalList} isLoggedIn={isLoggedIn} />} />
                     <Route path="/cats/:catId/*" element={<ProtectedRoute component={CatDetail} isLoggedIn={isLoggedIn} />} />
-                    <Route path='/SignUp' element={<SignUp onLogin={handleLogin} />} /> {/* SignUp에 onLogin 전달 */}
+                    <Route path='/SignUp' element={<SignUp onLogin={handleLogin} />} /> 
                     <Route path='/UserSet' element={<UserSet onLogin={handleLogin} />} />
                     <Route path='/Mypage/*' element={<ProtectedRoute component={Mypage} isLoggedIn={isLoggedIn} />} />
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
+};
+
+export default App; */
+
+
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Main from './components/Main/Main';
+import Map from './components/Map/Map';
+import Food from './components/Food/Food';
+import Hospital from './routes/Hospital/Hospital';
+import List from './routes/List/List';
+import Write from './routes/Write/Write';
+import User from './routes/User/User';
+import SignUp from './components/SignUp/SignUp';
+import CatDetail from './components/Catlist/CatDetail';
+import HospitalList from './components/HospitalList/HospitalList';
+import UserSet from './components/UserSet/UserSet';
+import Mypage from './components/Mypage/Mypage';
+
+import Menu from './components/Menu/Menu';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import { AuthProvider } from './components/Auth/AuthContext';
+
+const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('token'); // 로그아웃 시 토큰 제거
+        window.location.href = '/'; // 로그인 페이지로 리디렉션
+    };
+
+    return (
+        <AuthProvider>
+            <Router>
+                <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+                <Routes>
+                    <Route path="/" element={<User onLogin={handleLogin} />} />
+                    <Route path="/Map/*" element={<ProtectedRoute element={<Map />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/Food/*" element={<ProtectedRoute element={<Food />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/List/*" element={<ProtectedRoute element={<List />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/Main/*" element={<ProtectedRoute element={<Main />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/Write/*" element={<ProtectedRoute element={<Write />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/Hospital/*" element={<ProtectedRoute element={<Hospital />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/HospitalList/*" element={<ProtectedRoute element={<HospitalList />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/cats/:catId/*" element={<ProtectedRoute element={<CatDetail />} isLoggedIn={isLoggedIn} />} />
+                    <Route path="/SignUp" element={<SignUp onLogin={handleLogin} />} /> {/* SignUp에 onLogin 전달 */}
+                    <Route path="/UserSet" element={<UserSet onLogin={handleLogin} />} />
+                    <Route path="/Mypage/*" element={<ProtectedRoute element={<Mypage />} isLoggedIn={isLoggedIn} />} />
                 </Routes>
             </Router>
         </AuthProvider>
