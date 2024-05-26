@@ -47,9 +47,17 @@ const Mypage = () => {
     return (
         <S.Wrapper>
             <Header />
-            <S.Title>마이페이지</S.Title>
-            <S.Nickname>집사 이름: {nickname}</S.Nickname>
-            <S.Introduction>간단한 소개: {introduction}</S.Introduction>
+            <S.MyPageContainer>
+            <S.Title>MY PAGE</S.Title>
+            <S.Nickname>
+            집사 이름 : <span style={{ fontSize: '20px', marginLeft:'10px'}}> {nickname}</span>
+            </S.Nickname>
+            <S.Introduction>
+            Introduction : <span style={{ fontSize: '20px', marginLeft:'10px' }}> {introduction}</span>
+            </S.Introduction>
+
+            </S.MyPageContainer>
+
             <Menu />
         </S.Wrapper>
     );

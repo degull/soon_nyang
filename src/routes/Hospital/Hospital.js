@@ -79,28 +79,29 @@ const Hospital = () => {
   const getRandomDiagnosis = () => {
     const diagnoses = [
       {
-        name: '안검염 (Blepharitis)',
+        name: <strong>안검염 (Blepharitis)</strong>,
         description: '진단명: 안검의 염증으로, 눈꺼풀의 붓기와 붉어짐이 특징입니다.\n치료 방법: 항생제 연고 및 스테로이드 처방, 눈꺼풀 위생 관리.',
       },
       {
-        name: '비궤양성각막염 (Non-ulcerative Keratitis)',
+        name: <strong>비궤양성각막염 (Non-ulcerative Keratitis)</strong>,
         description: '진단명: 각막의 염증이 있지만 궤양이 없는 상태입니다.\n치료 방법: 항생제 또는 항바이러스제 점안, 인공눈물 사용.',
       },
       {
-        name: '결막염 (Conjunctivitis)',
+        name: <strong>결막염 (Conjunctivitis)</strong>,
         description: '진단명: 결막의 염증으로, 눈의 붉어짐과 분비물이 특징입니다.\n치료 방법: 원인에 따라 항생제 또는 항바이러스제 점안, 알레르기성 결막염의 경우 항히스타민제 사용.',
       },
       {
-        name: '각막부골편 (Corneal Sequestrum)',
+        name: <strong>각막부골편 (Corneal Sequestrum)</strong>,
         description: '진단명: 각막에 검은색의 죽은 조직이 형성되는 질환입니다.\n치료 방법: 외과적 제거 후 항생제 처방, 인공눈물 사용.',
       },
       {
-        name: '각막궤양 (Corneal Ulcer)',
+        name: <strong>각막궤양 (Corneal Ulcer)</strong>,
         description: '진단명: 각막의 상피층이 손상되어 궤양이 발생한 상태입니다.\n치료 방법: 항생제 또는 항바이러스제 점안, 심한 경우 외과적 치료 필요.',
       },
     ];
     return diagnoses[Math.floor(Math.random() * diagnoses.length)];
   };
+  
 
   const handleDiagnoseClick = async () => {
     setLoading(true);

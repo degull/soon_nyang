@@ -16,26 +16,29 @@ export const MyPageContainer = styled.div`
 `;
 
 export const Title = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 30px;
   font-weight: 900;
-  font-family: 'Cute_siu';
+  font-family: 'MoveSans-Bold';
   @font-face {
-    font-family: 'Cute_siu';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Cut_siu.woff') format('woff');
-    font-weight: normal;
+    font-family: 'MoveSans-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/MoveSans-Bold.woff2') format('woff2');
+    font-weight: 900;
     font-style: normal;
 }
 `;
 
 
 export const Nickname = styled.div`
-  font-size: 17px;
-  font-weight: bold;
-  margin-left: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  justify-content: center;
+  font-size: 27px;
+  font-weight: 900;
   font-family: 'Cute_siu';
   
   @font-face {
@@ -47,9 +50,12 @@ export const Nickname = styled.div`
 
 `;
 export const Introduction = styled.div`
-  font-size: 17px;
-  font-weight: bold;
-  margin-left: 50px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+  font-weight: 900;
   font-family: 'Cute_siu';
   
   @font-face {

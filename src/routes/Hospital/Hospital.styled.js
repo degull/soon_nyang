@@ -148,8 +148,8 @@ export const GoToHosText = styled.div`
   color: #FFA552;
   font-size: 11px;
   font-family: 'omyu_pretty';
-  display: inline-block; /* 이 부분 추가 */
-  margin-right: 10px; /* 이 부분 추가 */
+  display: inline-block;
+  margin-right: 10px;
   @font-face {
     font-family: 'omyu_pretty';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');

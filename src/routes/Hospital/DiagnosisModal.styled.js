@@ -67,15 +67,11 @@ export const CancelButton = styled.button`
 `;
 
 export const GoToHospitalButton = styled.button`
-  background: #007bff;
+  background: #FFA552;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-
-  &:hover {
-    background: #0069d9;
-  }
 `;

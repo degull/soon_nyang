@@ -34,7 +34,7 @@ const Loading = () => (
   <LoadingOverlay>
     <LoadingContent>
       <LoadingImage src="/img/cat.png" alt="Loading" />
-      <LoadingText>로딩중...</LoadingText>
+      <LoadingText>진단중...</LoadingText>
     </LoadingContent>
   </LoadingOverlay>
 );
