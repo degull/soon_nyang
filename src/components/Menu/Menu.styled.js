@@ -48,3 +48,8 @@ export const Icon = styled.img`
   width: 25px;
   height: 25px;
 `;
+
+export const LogoutButton = styled.button`
+
+
+`;
