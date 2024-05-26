@@ -245,7 +245,7 @@ const User = () => {
 export default User;
  */
 
-
+/* 
 import React, { useState } from 'react';
 import * as S from './User.styled';
 import Header from '../../components/Header/Header';
@@ -325,3 +325,80 @@ const User = ({ onLogin }) => {
 export default User;
 
 
+ */
+
+import React, { useState } from 'react';
+import * as S from './User.styled';
+import Header from '../../components/Header/Header';
+import Menu from '../../components/Menu/Menu';
+import { Link, useNavigate } from 'react-router-dom';
+
+const User = ({ onLogin }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://ec2-3-34-122-124.ap-northeast-2.compute.amazonaws.com:8080/v1/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: username, password }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify({ nickname: data.nickname, introduction: data.introduction }));
+                onLogin();  // 로그인 성공 시 부모 컴포넌트에 알리기
+                navigate('/Mypage');
+                alert('로그인 성공!');
+            } else {
+                alert('로그인 실패: ' + data.msg);
+            }
+        } catch (error) {
+            console.error('로그인 중 오류 발생:', error);
+            alert('로그인 중 오류가 발생했습니다.');
+        }
+    };
+
+    return (
+        <S.Wrapper>
+            <Header />
+            <S.LoginSignupButtonsContainer>
+                <S.CatImage src='/img/cat_01.png' />
+                <S.InputContainer>
+                    <S.InputLabel htmlFor="username"></S.InputLabel>
+                    <S.InputField
+                        type="text"
+                        id="username"
+                        placeholder='이메일'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </S.InputContainer>
+                <S.InputContainer>
+                    <S.InputLabel htmlFor="password"></S.InputLabel>
+                    <S.InputField
+                        type="password"
+                        id="password"
+                        placeholder='비밀번호'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </S.InputContainer>
+                <S.LoginButton onClick={handleLogin}>로그인</S.LoginButton>
+                <S.TextAndSignupContainer>
+                    <S.Text>아직 계정이 없으신가요?</S.Text>
+                    <Link to="/SignUp">
+                        <S.SignupButton>회원가입</S.SignupButton>
+                    </Link>
+                </S.TextAndSignupContainer>
+            </S.LoginSignupButtonsContainer>
+            <Menu />
+        </S.Wrapper>
+    );
+};
+
+export default User;
