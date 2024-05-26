@@ -147,7 +147,6 @@ const Menu = ({ isLoggedIn, onLogout }) => {
 export default Menu;
 
  */
-
 import React from 'react';
 import * as S from './Menu.styled';
 import { Link } from 'react-router-dom';
@@ -160,7 +159,7 @@ const Menu = ({ isLoggedIn, onLogout }) => {
     return (
         <S.Wrapper>
             <S.MenuContainer>
-                <Link to="/" onClick={scrollToTop}> 
+                <Link to="/Main/Main" onClick={scrollToTop}> 
                     <S.Icon src="/img/home.png" alt="Home" />
                 </Link>
                 <Link to="/List/List">
@@ -172,18 +171,14 @@ const Menu = ({ isLoggedIn, onLogout }) => {
                 <Link to="/Hospital/Hospital"> 
                     <S.Icon src="/img/hospital.png" alt="Hospital" />
                 </Link>
-                {isLoggedIn ? (
-                    <>
-                        <Link to="/Mypage">
-                            <S.Icon src="/img/mypage.png" alt="Mypage" />
-                        </Link>
-                        <S.LogoutButton onClick={onLogout}>로그아웃</S.LogoutButton>
-                    </>
-                ) : (
-                    <Link to="/User/User">
-                        <S.Icon src="/img/user.png" alt="User" />
+                <Link to="/Mypage">
+                        <S.Icon src="/img/user.png" alt="Mypage" />
                     </Link>
-                )}
+{/*                 {isLoggedIn && (
+                    <Link to="/Mypage">
+                        <S.Icon src="/img/user.png" alt="Mypage" />
+                    </Link>
+                )} */}
             </S.MenuContainer>
         </S.Wrapper>
     );
