@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* min-height: 100vh; */
+  
 /*   background: #fff;
  */`;
 
@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 export const SignContainer = styled.div`
   width: 100%;
   position: relative;
-  height: 100%;
+  height: 100vh;
   top: 120px;
   max-width: 550px;
   margin: 0 auto;
