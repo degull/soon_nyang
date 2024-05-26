@@ -48,8 +48,8 @@ const Map = ({ userLocation }) => {
         setIsDropdownRotated(!isDropdownRotated);
     };
 
-    const displayCatLocation = (catName, latitude, longitude) => { // 수정된 부분
-        // 고양이 이름과 위치 정보를 이용하여 마커를 클릭했을 때 정보를 표시하는 로직을 작성합니다.
+    const displayCatLocation = (catName, latitude, longitude) => { 
+
         console.log('Displaying cat location:', catName, latitude, longitude);
         alert(`선택한 고양이: ${catName}`);
     };

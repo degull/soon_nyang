@@ -69,7 +69,6 @@ export const Introduction = styled.div`
 
 export const LogoutButton = styled.button`
   display: flex;
-  /* margin-top: 150px; */
   margin: 130px auto;
   padding: 8px 30px;
   font-size: 12px;

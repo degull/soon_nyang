@@ -8,7 +8,7 @@ const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => {
 export default ProtectedRoute;
  */
 
-// ProtectedRoute.js
+
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
