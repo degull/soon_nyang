@@ -7,8 +7,8 @@
 	├── package-lock.json
 	├── package.json
 	├── public
-		|  ├── favicon.ico
-		|  ├── img
+	|  ├── favicon.ico
+	|  ├── img
 	├── src
 	   ├── App.css
 	   ├── App.js
